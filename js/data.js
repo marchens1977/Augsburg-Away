@@ -14,15 +14,12 @@
       { name: 'Jens', short: 'Jens (Locken)', photo: 'img/crew3.jpg', emoji: '🥸' }
     ],
 
-    // 🔴 Mainz-Gebiet (Platzhalter – wird noch genau festgelegt).
-    // Punkte als [Breitengrad, Längengrad]. In der App unter "Anfahrt → Zone bearbeiten" neu zeichnen.
+    // 🔴 Mainz-Gebiet – von Marc am 20.11.2026 in der App gezeichnet (12 Punkte).
+    // Punkte als [Breitengrad, Längengrad]. Neu zeichnen: ...github.io/Augsburg-Away/?zone → Anfahrt → Zone bearbeiten.
     mainzZone: [
-      [50.060, 8.150],
-      [50.070, 8.290],
-      [50.030, 8.390],
-      [49.960, 8.370],
-      [49.930, 8.230],
-      [49.975, 8.120]
+      [50.04536, 8.20408], [50.03854, 8.24196], [50.07353, 8.29089], [50.03399, 8.39029],
+      [49.98423, 8.37193], [49.86161, 8.38934], [49.72523, 8.44025], [49.74967, 8.14763],
+      [49.81561, 7.80145], [50.03950, 7.69867], [50.06246, 7.94586], [50.01544, 7.94391]
     ],
 
     // Ungefähre Strecken (Wegpunkte entlang der Autobahnen, keine exakte Navigation)

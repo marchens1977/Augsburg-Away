@@ -7,6 +7,13 @@ function t(name, fn) { fn(); n++; console.log('✔', name); }
 
 t('Mainz-Innenstadt liegt in der Zone', () => assert.ok(L.pointInPolygon([49.9929, 8.2473], CONFIG.mainzZone)));
 t('Frankfurt liegt NICHT in der Zone', () => assert.ok(!L.pointInPolygon([50.1109, 8.6821], CONFIG.mainzZone)));
+t('Marcs Zone: 12 Punkte, Bingen & Nierstein drin, Wiesbaden & Darmstadt draußen', () => {
+  assert.strictEqual(CONFIG.mainzZone.length, 12);
+  assert.ok(L.pointInPolygon([49.9667, 7.8986], CONFIG.mainzZone), 'Bingen');
+  assert.ok(L.pointInPolygon([49.8700, 8.3400], CONFIG.mainzZone), 'Nierstein');
+  assert.ok(!L.pointInPolygon([50.0826, 8.2400], CONFIG.mainzZone), 'Wiesbaden');
+  assert.ok(!L.pointInPolygon([49.8728, 8.6512], CONFIG.mainzZone), 'Darmstadt');
+});
 t('Augsburg liegt NICHT in der Zone', () => assert.ok(!L.pointInPolygon(CONFIG.stadium.pos, CONFIG.mainzZone)));
 t('Entfernung Mainz–Augsburg ~ 270 km Luftlinie', () => {
   const d = L.distanceKm(CONFIG.mainz.pos, CONFIG.stadium.pos); assert.ok(d > 250 && d < 290, d);
