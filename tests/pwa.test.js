@@ -14,7 +14,7 @@ const server = http.createServer((req, res) => {
   const browser = await chromium.launch();
   try {
     const m = JSON.parse(fs.readFileSync(path.join(root, 'manifest.webmanifest'), 'utf8'));
-    assert.strictEqual(m.display, 'standalone'); assert.ok(m.name && m.short_name && m.start_url);
+    assert.strictEqual(m.display, 'standalone'); assert.strictEqual(m.short_name, 'Augsburg Away'); assert.ok(m.name && m.short_name && m.start_url);
     for (const i of m.icons) {
       const buf = fs.readFileSync(path.join(root, i.src));
       const w = buf.readUInt32BE(16), h = buf.readUInt32BE(20);

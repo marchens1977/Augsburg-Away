@@ -9,10 +9,10 @@
   <link rel="apple-touch-icon" href="img/icons/apple-touch-icon.png">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-title" content="Augsburg 05">
+  <meta name="apple-mobile-web-app-title" content="Augsburg Away">
   <title>Grand Tour Augsburg – Mainz 05 auswärts</title>
   <link rel="stylesheet" href="vendor/leaflet/leaflet.css">
-  <link rel="stylesheet" href="css/style.css?v=202611200850">
+  <link rel="stylesheet" href="css/style.css?v=202611200853">
 </head>
 <body>
   <main>
@@ -39,7 +39,7 @@
 
       <div class="card install hidden" id="install-card">
         <b>📲 Als App installieren</b>
-        <p class="muted" id="install-text">Dann liegt Augsburg 05 mit eurem Bild als Icon auf dem Startbildschirm.</p>
+        <p class="muted" id="install-text">Dann liegt „Augsburg Away“ mit eurem Bild als Icon auf dem Startbildschirm.</p>
         <button id="btn-install" class="btn primary">📲 Jetzt installieren</button>
       </div>
 
@@ -50,6 +50,15 @@
         <div class="countdown" id="countdown"></div>
         <div class="stars" id="stars" title="Fahndungs-Level"></div>
         <small class="muted">Fahndungs-Level steigt mit jedem Bingo-Feld 😇</small>
+      </div>
+      <div class="card share">
+        <b>📤 App weiterleiten</b>
+        <p class="muted">Schick den Link an Jens B. und Jens L. (oder wen auch immer).</p>
+        <div class="row">
+          <button id="btn-share" class="btn primary">📤 Teilen</button>
+          <a id="btn-whatsapp" class="btn wa" target="_blank" rel="noopener">💬 WhatsApp</a>
+          <button id="btn-copy-link" class="btn">🔗 Link kopieren</button>
+        </div>
       </div>
     </section>
 
@@ -158,8 +167,8 @@
   <div id="toast" class="toast hidden"></div>
 
   <script src="vendor/leaflet/leaflet.js"></script>
-  <script src="js/logic.js?v=202611200850"></script>
-  <script src="js/data.js?v=202611200850"></script>
-  <script src="js/app.js?v=202611200850"></script>
+  <script src="js/logic.js?v=202611200853"></script>
+  <script src="js/data.js?v=202611200853"></script>
+  <script src="js/app.js?v=202611200853"></script>
 </body>
 </html>

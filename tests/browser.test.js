@@ -22,6 +22,10 @@ const assert = require('assert');
     assert.strictEqual(await page.locator('#hero-img').count(), 0); console.log('✔ Kein Startbild da → Fotokarten werden gezeigt');
   }
   assert.ok(/Tage|ANPFIFF/.test(await page.textContent('#countdown'))); console.log('✔ Countdown läuft');
+  const wa = await page.getAttribute('#btn-whatsapp', 'href');
+  assert.ok(wa.startsWith('https://wa.me/?text=') && decodeURIComponent(wa).includes('https://marchens1977.github.io/Augsburg-Away/'), wa);
+  assert.ok(!decodeURIComponent(wa).includes('?zone')); console.log('✔ WhatsApp-Weiterleiten-Link (ohne ?zone)');
+  assert.ok(await page.isVisible('#btn-copy-link')); console.log('✔ Link-kopieren-Knopf da');
   await shot('1-start');
 
   assert.strictEqual(await page.locator('[data-tab=beer]').count(), 0); console.log('✔ Kein Bierzähler mehr');

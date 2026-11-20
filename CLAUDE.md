@@ -24,6 +24,10 @@ Kleine Spaß-Web-App für die Auswärtsfahrt zum Spiel **FC Augsburg – 1. FSV 
   `sw.js` (Service Worker, „erst Internet, dann Speicher“ → immer neueste Version, im Funkloch die letzte).
   Auf der Startseite erscheint „📲 Jetzt installieren“, wenn der Browser es anbietet (Chrome/Samsung Internet).
 
+- **App weiterleiten** (neu 20.11.): Karte auf der Startseite mit „📤 Teilen“ (Handy-Teilen-Menü),
+  „💬 WhatsApp“ und „🔗 Link kopieren“. Link + Text stehen in `js/data.js` (`appUrl`, `shareText`).
+- App-Name unter dem Icon: **„Augsburg Away“** (`manifest.webmanifest` → `short_name`).
+
 ## Dateien
 - `index.html` – Seitengerüst · `css/style.css` – Aussehen · `js/app.js` – Bedienung
 - `js/data.js` – **alle Inhalte & Einstellungen** (Anstoßzeit, Crew-Namen/Fotos, Mainz-Zone, Routen, Infotexte)
@@ -82,6 +86,7 @@ Letzter Lauf: alle bestanden (20.11.2026, neuer Zonen-Editor, Fangesang entfernt
 - [ ] Tippspiel: Tipps eintragen, nach dem Spiel Endergebnis → Siegerehrung
 - [ ] Bingo: Felder antippen, bei voller Reihe kommt „BINGO!“
 - [ ] App installieren: Knopf „Jetzt installieren“ oder Browser-Menü ⋮ → „Zum Startbildschirm hinzufügen“ – Icon = euer Bild
-- [ ] Installierte App öffnet ohne Browser-Leiste
+- [ ] Installierte App öffnet ohne Browser-Leiste, Name unter dem Icon: „Augsburg Away“
+- [ ] Knöpfe „Teilen“, „WhatsApp“, „Link kopieren“ funktionieren
 - [ ] Sonntag live: Alarm kommt beim Verlassen von Mainz
 - [ ] Sonntag live: Kilometer-Sprüche erscheinen unterwegs

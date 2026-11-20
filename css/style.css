@@ -138,3 +138,8 @@ dd { margin: 2px 0 0; }
 /* Installieren-Hinweis */
 .install { border: 2px solid var(--cyan); text-align: center; }
 .install p { margin: 6px 0 10px; }
+
+/* Weiterleiten */
+.share { text-align: center; }
+.share .row { justify-content: center; }
+.btn.wa { background: #25d366; color: #000; text-decoration: none; display: inline-block; }

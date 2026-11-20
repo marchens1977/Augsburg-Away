@@ -301,6 +301,18 @@
   });
   window.addEventListener('appinstalled', function () { $('install-card').classList.add('hidden'); toast('Installiert! Schau auf deinen Startbildschirm. 📲'); });
 
+  // ---------- App weiterleiten ----------
+  $('btn-whatsapp').href = 'https://wa.me/?text=' + encodeURIComponent(C.shareText + ' ' + C.appUrl);
+  if (!navigator.share) $('btn-share').classList.add('hidden'); // ältere Browser: nur WhatsApp & Kopieren
+  $('btn-share').addEventListener('click', function () {
+    navigator.share({ title: 'Augsburg Away', text: C.shareText, url: C.appUrl }).catch(function () {});
+  });
+  $('btn-copy-link').addEventListener('click', function () {
+    var done = function () { toast('Link kopiert! 🔗'); };
+    if (navigator.clipboard) navigator.clipboard.writeText(C.appUrl).then(done, function () { prompt('Link kopieren:', C.appUrl); });
+    else prompt('Link kopieren:', C.appUrl);
+  });
+
   // ---------- Start ----------
   renderCrew(); renderCountdown(); setInterval(renderCountdown, 1000);
   renderRoutes(); renderInfo(); renderTips(); renderBingo(); renderStars();
