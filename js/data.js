@@ -1,7 +1,7 @@
 /* Alle Einstellungen und Inhalte an einem Ort – hier kann man leicht etwas ändern. */
 (function (root) {
   var CONFIG = {
-    // ⚠️ Anstoßzeit bitte bestätigen (Sonntag, 22.11.2026)
+    // Anstoß: Sonntag, 22.11.2026, 15:30 Uhr (10. Spieltag, live auf DAZN) – im Internet geprüft am 20.11.
     kickoff: '2026-11-22T15:30:00+01:00',
     stadium: { name: 'WWK Arena, Augsburg', pos: [48.3232, 10.8863] },
     mainz: { name: 'MEWA Arena, Mainz', pos: [49.9839, 8.2244] },

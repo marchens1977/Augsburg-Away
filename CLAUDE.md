@@ -51,7 +51,7 @@ Letzter Lauf: alle bestanden (20.11.2026, neuer Zonen-Editor, Fangesang entfernt
 ## Offene Punkte
 - [x] Fotos der 3 Mitfahrer → Startseite (Comic-Filter)
 - [x] Namen: links Marc, Mitte Jens (Sportbrille), rechts Jens (Locken). Im Tippspiel mit Zusatz, damit man die zwei Jens unterscheidet.
-- [ ] **Anstoßzeit bestätigen** (Platzhalter: 15:30 Uhr)
+- [x] Anstoßzeit: So, 22.11.2026, 15:30 Uhr, 10. Spieltag, live auf DAZN (im Internet geprüft: DAZN, buli-tipphilfe.de)
 - [ ] Mainz-Zone genau festlegen (Marc zeichnet sie im Editor und schickt den Text)
 - [ ] Alarm-Text / Sound nach Wunsch anpassen
 - [x] Tippspiel, Raststätten-Bingo, km-Sprüche
