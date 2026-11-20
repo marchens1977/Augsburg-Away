@@ -13,6 +13,8 @@ Kleine Spaß-Web-App für die Auswärtsfahrt zum Spiel **FC Augsburg – 1. FSV 
   „Zone bearbeiten“ = Vollbild-Editor: Karte verschieben, ✚-Fadenkreuz in der Mitte, Knopf „Punkt setzen“,
   Punkte werden automatisch verbunden; „Fertig“ speichert und zeigt einen Text „MAINZ-ZONE: [...]“ zum Kopieren
   (an Claude schicken → wird in `js/data.js` fest für alle eingebaut).
+  **Seit 20.11. ausgeblendet.** Nur sichtbar über https://marchens1977.github.io/Augsburg-Away/?zone
+  (dann auch Knopf „📋 Zone als Text“, zeigt die auf diesem Handy gespeicherte Zone zum Kopieren).
 - **Augsburg**: Infos zum FCA, zur Stadt und Tipps für Sonntag.
 - **Spiele**: Tippspiel mit Siegerehrung (3/2/1 Punkte), Raststätten-Bingo 4×4 (erkennt Reihen, Spalten, Diagonalen).
 - **Kilometer-Sprüche** (neu): Bei GPS-Fahrt kommt bei „Noch 350/300/…/10/1 km“ ein Spruch.
@@ -52,7 +54,7 @@ Letzter Lauf: alle bestanden (20.11.2026, neuer Zonen-Editor, Fangesang entfernt
 - [x] Fotos der 3 Mitfahrer → Startseite (Comic-Filter)
 - [x] Namen: links Marc, Mitte Jens (Sportbrille), rechts Jens (Locken). Im Tippspiel mit Zusatz, damit man die zwei Jens unterscheidet.
 - [x] Anstoßzeit: So, 22.11.2026, 15:30 Uhr, 10. Spieltag, live auf DAZN (im Internet geprüft: DAZN, buli-tipphilfe.de)
-- [ ] Mainz-Zone genau festlegen (Marc zeichnet sie im Editor und schickt den Text)
+- [ ] Mainz-Zone: Marc hat sie gezeichnet (nur auf seinem Handy gespeichert). Fehlt noch: Text über `?zone` → „Zone als Text“ an Claude, dann fest in `js/data.js` eintragen.
 - [ ] Alarm-Text / Sound nach Wunsch anpassen
 - [x] Tippspiel, Raststätten-Bingo, km-Sprüche
 - [x] Startbild `img/hero.jpg` (von Marc mit ChatGPT erstellt, 20.11.): alle drei im Mercedes-SUV, GTA-VI-Look.

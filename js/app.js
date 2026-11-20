@@ -154,6 +154,15 @@
   // ---------- Zone bearbeiten (Vollbild, Fadenkreuz in der Mitte) ----------
   var zMap = null, zLine, zDots, zPoints = [];
   $('btn-edit-zone').addEventListener('click', openZoneEditor);
+  // Bearbeiten ist versteckt. Nur mit ...github.io/Augsburg-Away/?zone sichtbar.
+  if (/[?&]zone\b/.test(location.search)) {
+    $('btn-edit-zone').classList.remove('hidden');
+    $('btn-show-zone').classList.remove('hidden');
+  }
+  $('btn-show-zone').addEventListener('click', function () {
+    $('zone-code').value = 'MAINZ-ZONE: ' + JSON.stringify(zone);
+    $('zone-done').classList.remove('hidden');
+  });
   function openZoneEditor() {
     if (!$('zone-fs').classList.contains('hidden')) return; // schon offen
     $('zone-fs').classList.remove('hidden');

@@ -40,6 +40,9 @@ const assert = require('assert');
   await shot('2-karte');
 
   // Zone neu zeichnen: Karte verschieben + "Punkt setzen"
+  assert.ok(!(await page.isVisible('#btn-edit-zone'))); console.log('✔ Zone bearbeiten normal ausgeblendet');
+  await page.goto('file://' + path.resolve(__dirname, '../index.html') + '?zone');
+  await page.click('[data-tab=route]');
   await page.click('#btn-edit-zone');
   await page.waitForSelector('#zone-fs:not(.hidden)');
   const box = await page.locator('#zone-map').boundingBox();
@@ -58,6 +61,9 @@ const assert = require('assert');
   const pts = JSON.parse(code.replace('MAINZ-ZONE: ', ''));
   assert.strictEqual(pts.length, 3);
   assert.ok(pts.every(p => p[0] > 49 && p[0] < 51 && p[1] > 7 && p[1] < 10), code); console.log('✔ Zone gespeichert, Code: ' + code);
+  await page.click('#zone-done-ok');
+  await page.click('#btn-show-zone');
+  assert.strictEqual(await page.inputValue('#zone-code'), code); console.log('✔ „Zone als Text“ zeigt die gespeicherte Zone');
   await page.click('#zone-done-ok');
   await page.reload();
   assert.ok(/MAINZ|\[/.test(JSON.stringify(await page.evaluate(() => localStorage.getItem('gta05_zone'))))); console.log('✔ Zone bleibt nach Neuladen');
