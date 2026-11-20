@@ -55,9 +55,8 @@ Letzter Lauf: alle bestanden (20.11.2026, neuer Zonen-Editor, Fangesang entfernt
 - [ ] Mainz-Zone genau festlegen (Marc zeichnet sie im Editor und schickt den Text)
 - [ ] Alarm-Text / Sound nach Wunsch anpassen
 - [x] Tippspiel, Raststätten-Bingo, km-Sprüche
-- [ ] Startbild: alle drei steigen im GTA-6-Stil in einen Mercedes-SUV. Marc lässt es in einer anderen KI erstellen
-  (ElevenLabs abgelehnt, ~3.000 Credits). Bild-Auftrag zum Kopieren: `docs/bild-auftrag.md`.
-  Einbau: Bild als `img/hero.jpg` speichern – die App zeigt es dann automatisch statt Fotokarten + Auto.
+- [x] Startbild `img/hero.jpg` (von Marc mit ChatGPT erstellt, 20.11.): alle drei im Mercedes-SUV, GTA-VI-Look.
+  Ersetzt automatisch Fotokarten + gezeichnetes Auto (die bleiben als Ersatz, falls das Bild fehlt).
 - [ ] GitHub Pages einschalten (Branch `main` wurde von Claude befüllt; Einschalten unter Settings → Pages macht Marc)
 - Hinweis Datenschutz: GitHub Pages ist öffentlich – wer den Link hat, sieht auch die Fotos.
 
@@ -67,7 +66,7 @@ Letzter Lauf: alle bestanden (20.11.2026, neuer Zonen-Editor, Fangesang entfernt
 - [ ] „GPS starten“ fragt nach Standort, blauer Punkt erscheint an der richtigen Stelle
 - [ ] „Alarm testen“: rotes Blinken, Vibration, Sirenen-Ton
 - [ ] Nach Schließen und Neuöffnen sind Tipps und Bingo-Kreuze noch da
-- [ ] Fotos auf der Startseite sehen gut aus
+- [ ] Startbild auf der Startseite sieht gut aus
 - [ ] Zone bearbeiten: Punkte setzen, Fertig, Text kopieren klappt am Handy
 - [ ] Tippspiel: Tipps eintragen, nach dem Spiel Endergebnis → Siegerehrung
 - [ ] Bingo: Felder antippen, bei voller Reihe kommt „BINGO!“
