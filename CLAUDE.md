@@ -10,10 +10,11 @@ Kleine Spaß-Web-App für die Auswärtsfahrt zum Spiel **FC Augsburg – 1. FSV 
 - **Anfahrt**: Karte (Leaflet + OpenStreetMap) mit 2 Routen (über Stuttgart / über Würzburg), Stadion- und Mainz-Marker,
   rote Mainz-Zone, GPS-Tracker (eigene Position, gefahrene Spur, km bis Augsburg, Tempo),
   **Mainz-Alarm** beim Verlassen der Zone (Blinken, Vibration, Sirene) + „Willkommen daheim“ beim Zurückkommen,
-  „Zone bearbeiten“ (Punkte auf der Karte antippen → Text an Claude schicken).
+  „Zone bearbeiten“ = Vollbild-Editor: Karte verschieben, ✚-Fadenkreuz in der Mitte, Knopf „Punkt setzen“,
+  Punkte werden automatisch verbunden; „Fertig“ speichert und zeigt einen Text „MAINZ-ZONE: [...]“ zum Kopieren
+  (an Claude schicken → wird in `js/data.js` fest für alle eingebaut).
 - **Augsburg**: Infos zum FCA, zur Stadt und Tipps für Sonntag.
-- **Spiele** (neu 20.11.): Fangesang-Knopf (zufälliger Schlachtruf, Handy spricht ihn per Sprachausgabe),
-  Tippspiel mit Siegerehrung (3/2/1 Punkte), Raststätten-Bingo 4×4 (erkennt Reihen, Spalten, Diagonalen).
+- **Spiele**: Tippspiel mit Siegerehrung (3/2/1 Punkte), Raststätten-Bingo 4×4 (erkennt Reihen, Spalten, Diagonalen).
 - **Kilometer-Sprüche** (neu): Bei GPS-Fahrt kommt bei „Noch 350/300/…/10/1 km“ ein Spruch.
 - **Crew-Fotos** (neu): 3 echte Fotos als Comic-Porträts (`img/crew1-3.jpg`), Startseite mit gezeichnetem Auto.
 
@@ -34,6 +35,9 @@ Kleine Spaß-Web-App für die Auswärtsfahrt zum Spiel **FC Augsburg – 1. FSV 
 - Kein „GTA“-Logo/Originalgrafik, nur ein eigener Retro-Stil im ähnlichen Look.
 - Stadtplan mit Kneipen: vom Nutzer gestrichen.
 - Bierzähler: am 20.11. auf Wunsch entfernt („macht für die Fahrt keinen Sinn“).
+- Fangesang-Knopf: am 20.11. entfernt (Computerstimme klang schlecht).
+- Zonen-Editor: Antippen der Karte setzt KEINE Punkte mehr (am Handy hat sich nur die Karte verschoben) –
+  nur noch Fadenkreuz + Knopf. Fehler behoben: erster Punkt ging verloren, wenn man sofort nach dem Öffnen tippte.
 
 ## Tests (nach jeder Änderung laufen lassen)
 ```
@@ -41,16 +45,16 @@ node tests/logic.test.js      # 12 Rechen-Tests (Zone, Entfernungen, Sterne, Cou
 node tests/browser.test.js    # Klick-Test im Browser in Handy-Größe, inkl. simulierter GPS-Fahrt aus Mainz raus
 SCREENSHOTS=/pfad node tests/browser.test.js   # zusätzlich Bildschirmfotos
 ```
-Letzter Lauf: alle bestanden (20.11.2026, nach Entfernen des Bierzählers).
+Letzter Lauf: alle bestanden (20.11.2026, neuer Zonen-Editor, Fangesang entfernt; Zonen-Test 8× hintereinander grün).
 
 ## Offene Punkte
 - [x] Fotos der 3 Mitfahrer → Startseite (Comic-Filter)
 - [x] Namen: links Marc, Mitte Jens (Sportbrille), rechts Jens (Locken). Im Tippspiel mit Zusatz, damit man die zwei Jens unterscheidet.
 - [ ] **Anstoßzeit bestätigen** (Platzhalter: 15:30 Uhr)
-- [ ] Mainz-Zone genau festlegen
+- [ ] Mainz-Zone genau festlegen (Marc zeichnet sie im Editor und schickt den Text)
 - [ ] Alarm-Text / Sound nach Wunsch anpassen
-- [x] Tippspiel, Fangesang-Knopf, Raststätten-Bingo, km-Sprüche
-- [ ] Optional: gemaltes KI-Startbild (kostet ElevenLabs-Guthaben – nur mit OK)
+- [x] Tippspiel, Raststätten-Bingo, km-Sprüche
+- [ ] Startbild: alle drei steigen im GTA-6-Stil in einen Mercedes-SUV (KI-Bild, Marc entscheidet vorher)
 - [ ] GitHub Pages einschalten (Branch `main` wurde von Claude befüllt; Einschalten unter Settings → Pages macht Marc)
 - Hinweis Datenschutz: GitHub Pages ist öffentlich – wer den Link hat, sieht auch die Fotos.
 
@@ -61,7 +65,7 @@ Letzter Lauf: alle bestanden (20.11.2026, nach Entfernen des Bierzählers).
 - [ ] „Alarm testen“: rotes Blinken, Vibration, Sirenen-Ton
 - [ ] Nach Schließen und Neuöffnen sind Tipps und Bingo-Kreuze noch da
 - [ ] Fotos auf der Startseite sehen gut aus
-- [ ] Fangesang-Knopf: Handy spricht den Spruch (Ton an!)
+- [ ] Zone bearbeiten: Punkte setzen, Fertig, Text kopieren klappt am Handy
 - [ ] Tippspiel: Tipps eintragen, nach dem Spiel Endergebnis → Siegerehrung
 - [ ] Bingo: Felder antippen, bei voller Reihe kommt „BINGO!“
 - [ ] Sonntag live: Alarm kommt beim Verlassen von Mainz

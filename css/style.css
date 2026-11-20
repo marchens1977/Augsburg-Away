@@ -97,12 +97,6 @@ dd { margin: 2px 0 0; }
   box-shadow: 0 0 0 6px #00e5ff55; }
 
 /* Spiele */
-.chant-card { text-align: center; border: 2px solid var(--cyan); }
-.chant { font: 26px Impact, sans-serif; text-transform: uppercase; color: var(--orange); min-height: 70px;
-  display: flex; align-items: center; justify-content: center; padding: 6px; }
-.chant.pop { animation: pop .4s; }
-@keyframes pop { 0% { transform: scale(.6); } 70% { transform: scale(1.15); } 100% { transform: scale(1); } }
-.chant-card .row { justify-content: center; align-items: center; }
 .big-btn { font-size: 20px; padding: 16px 26px; }
 .tip-row { display: flex; align-items: center; gap: 6px; padding: 6px 0; }
 .tip-row span { flex: 1; font-weight: 600; }
@@ -120,3 +114,16 @@ dd { margin: 2px 0 0; }
 .tabs button { font-size: 20px; }
 .car-svg { width: 78%; max-width: 320px; filter: drop-shadow(0 0 10px #ff2d95aa); animation: drive 2.5s ease-in-out infinite alternate; }
 @keyframes drive { from { transform: translateX(-8px); } to { transform: translateX(8px); } }
+
+/* Zonen-Editor Vollbild */
+.zone-fs { position: fixed; inset: 0; z-index: 1800; background: #000; display: flex; flex-direction: column; }
+.zone-top { display: flex; justify-content: space-between; align-items: center; padding: 12px 14px; background: #1f1233; }
+#zone-count { color: var(--cyan); font-weight: 700; }
+#zone-map { flex: 1; }
+.crosshair { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); z-index: 1900; pointer-events: none;
+  font-size: 44px; color: #fff; text-shadow: 0 0 4px #000, 0 0 8px #000; line-height: 1; }
+.zone-help { background: #1f1233; padding: 8px 12px; font-size: 13px; color: var(--muted); }
+.zone-bar { display: flex; gap: 6px; padding: 10px; padding-bottom: calc(10px + env(safe-area-inset-bottom)); background: #000; }
+.zone-bar .btn { padding: 14px 10px; }
+.zone-bar #zfs-add { flex: 1; font-size: 17px; }
+.btn.ok { background: #0a8f4f; }

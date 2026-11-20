@@ -54,35 +54,17 @@
       <div class="card" id="route-list"></div>
       <div class="card">
         <h3>🔴 Mainz-Gebiet</h3>
-        <p class="muted">Verlässt ihr die rote Zone, gibt’s Alarm.</p>
+        <p class="muted">Verlasst ihr die rote Zone, gibt’s Alarm.</p>
         <div class="row">
           <button id="btn-test-alarm" class="btn">🚨 Alarm testen</button>
           <button id="btn-edit-zone" class="btn">✏️ Zone bearbeiten</button>
         </div>
-        <div id="zone-editor" class="hidden">
-          <p>Tippe auf der Karte nacheinander die Eckpunkte der Zone an.</p>
-          <div class="row">
-            <button id="btn-zone-undo" class="btn">↩️ Punkt zurück</button>
-            <button id="btn-zone-save" class="btn primary">💾 Speichern</button>
-            <button id="btn-zone-reset" class="btn">♻️ Standard</button>
-          </div>
-          <textarea id="zone-code" readonly rows="3"></textarea>
-          <small class="muted">Diesen Text kannst du an Claude schicken, damit die Zone für alle fest eingebaut wird.</small>
-        </div>
+
       </div>
     </section>
 
     <!-- SPIELE -->
     <section id="tab-games" class="tab">
-      <div class="card chant-card">
-        <h2>📣 Fangesang-Knopf</h2>
-        <div id="chant" class="chant">Drück den Knopf!</div>
-        <div class="row">
-          <button id="btn-chant" class="btn primary big-btn">📣 SINGEN!</button>
-          <label class="muted"><input type="checkbox" id="chant-voice" checked> Handy singt mit</label>
-        </div>
-      </div>
-
       <div class="card">
         <h2>🔮 Tippspiel</h2>
         <p class="muted">Tipp abgeben (Mainz : Augsburg). Exakt = 3 Punkte, richtige Tordifferenz = 2, richtiger Sieger = 1.</p>
@@ -117,6 +99,38 @@
     <button data-tab="games">🎲<span>Spiele</span></button>
     <button data-tab="info">🏰<span>Augsburg</span></button>
   </nav>
+
+  <!-- Zonen-Editor (Vollbild) -->
+  <div id="zone-fs" class="zone-fs hidden">
+    <div class="zone-top">
+      <b>✏️ Mainz-Zone zeichnen</b>
+      <span id="zone-count">0 Punkte</span>
+    </div>
+    <div id="zone-map"></div>
+    <div class="crosshair">✚</div>
+    <div class="zone-help">Karte verschieben, bis das ✚ auf der Grenze liegt → <b>„Punkt setzen“</b>. Die Punkte werden automatisch verbunden.</div>
+    <div class="zone-bar">
+      <button id="zfs-add" class="btn primary">➕ Punkt setzen</button>
+      <button id="zfs-undo" class="btn">↩️</button>
+      <button id="zfs-clear" class="btn">🗑️</button>
+      <button id="zfs-save" class="btn ok">✅ Fertig</button>
+      <button id="zfs-cancel" class="btn">✖️</button>
+    </div>
+  </div>
+
+  <!-- Zone fertig: Code zum Weiterschicken -->
+  <div id="zone-done" class="alarm ok hidden">
+    <div class="alarm-box">
+      <div class="alarm-icon">✅</div>
+      <h2>Zone gespeichert!</h2>
+      <p>Damit die Zone bei <b>allen</b> gilt: Text kopieren und Claude schicken.</p>
+      <textarea id="zone-code" readonly rows="4"></textarea>
+      <div class="row" style="justify-content:center">
+        <button id="zone-copy" class="btn primary">📋 Kopieren</button>
+        <button id="zone-done-ok" class="btn">Schließen</button>
+      </div>
+    </div>
+  </div>
 
   <!-- Alarm-Fenster -->
   <div id="alarm" class="alarm hidden">

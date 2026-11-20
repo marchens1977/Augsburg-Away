@@ -15,7 +15,7 @@
     ],
 
     // 🔴 Mainz-Gebiet (Platzhalter – wird noch genau festgelegt).
-    // Punkte als [Breitengrad, Längengrad]. In der App unter "Anfahrt → Zone bearbeiten" änderbar.
+    // Punkte als [Breitengrad, Längengrad]. In der App unter "Anfahrt → Zone bearbeiten" neu zeichnen.
     mainzZone: [
       [50.060, 8.150],
       [50.070, 8.290],
@@ -89,18 +89,6 @@
     'Hupen für 05-Fans', 'Kaffee verschüttet', 'Navi will umleiten', 'Sprit über 2 € pro Liter'
   ];
 
-  // Fangesänge (kurze Schlachtrufe)
-  var CHANTS = [
-    'NULLFÜNF! NULLFÜNF! NULLFÜNF!',
-    'AUSWÄRTSSIEG! AUSWÄRTSSIEG!',
-    'Steht auf, wenn ihr Mainzer seid!',
-    'Hier regiert der Ef-Es-Vau!',
-    'Rot und Weiß, wir sind Mainzer – und wir fahren bis nach Augsburg!',
-    'Oh, wie ist das schön! So was hat man lange nicht gesehn!',
-    'Wir sind Mainzer, wir sind laut, auswärts wird Punkte geklaut!',
-    'Helau! (Ja, auch im November.)'
-  ];
-
   // Sprüche für die "Noch X km"-Marken unterwegs
   var KM_LINES = {
     350: 'Noch 350 km. Die Reise hat gerade erst begonnen. 🚘',
@@ -115,7 +103,7 @@
     1: 'Ziel erreicht! Mission „Auswärtssieg“ startet jetzt. 🏟️'
   };
 
-  INFO.bingo = BINGO; INFO.chants = CHANTS; INFO.kmLines = KM_LINES;
+  INFO.bingo = BINGO; INFO.kmLines = KM_LINES;
   root.CONFIG = CONFIG;
   root.INFO = INFO;
   if (typeof module !== 'undefined' && module.exports) module.exports = { CONFIG: CONFIG, INFO: INFO };

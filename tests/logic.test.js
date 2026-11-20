@@ -52,6 +52,5 @@ t('Inhalte: 16 Bingo-Felder, Sprüche für alle km-Marken', () => {
   const { INFO } = require('../js/data.js');
   assert.strictEqual(new Set(INFO.bingo).size, 16);
   [350, 300, 250, 200, 150, 100, 50, 25, 10, 1].forEach(k => assert.ok(INFO.kmLines[k], k));
-  assert.ok(INFO.chants.length >= 5);
 });
 console.log(`\n${n} Logik-Tests bestanden.`);

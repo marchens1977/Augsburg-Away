@@ -50,8 +50,7 @@
 
   // ---------- Karte ----------
   var zone = store.get('zone', C.mainzZone), zoneLayer, meMarker, trail, follow = true, watchId = null;
-  var editing = false, editPoints = [], editLayer, editFresh = false;
-
+  
   function initMap() {
     if (map) return;
     map = L.map('map', { zoomControl: true }).setView([49.2, 9.5], 7);
@@ -66,7 +65,6 @@
     L.marker(C.stadium.pos).addTo(map).bindPopup('🏟️ ' + C.stadium.name + '<br>Hier holen wir die 3 Punkte!');
     L.marker(C.mainz.pos).addTo(map).bindPopup('❤️ ' + C.mainz.name);
     trail = L.polyline([], { color: '#fff', weight: 3, dashArray: '4 6' }).addTo(map);
-    map.on('click', onMapClick);
     map.on('dragstart', function () { if (follow) setFollow(false); });
   }
 
@@ -153,57 +151,64 @@
     } catch (e) {}
   }
 
-  // ---------- Zone bearbeiten ----------
-  $('btn-edit-zone').addEventListener('click', function () {
-    editing = !editing;
-    $('zone-editor').classList.toggle('hidden', !editing);
-    $('btn-edit-zone').textContent = editing ? '✖️ Bearbeiten beenden' : '✏️ Zone bearbeiten';
-    if (editing) { editPoints = zone.slice(); editFresh = true; drawEdit(); setFollow(false); map.fitBounds(L.polygon(zone).getBounds().pad(0.5)); toast('Tippe auf die Karte, um Punkte zu setzen.'); }
-    else if (editLayer) { map.removeLayer(editLayer); editLayer = null; }
-  });
-  function onMapClick(e) {
-    if (!editing) return;
-    if (editFresh) { editPoints = []; editFresh = false; }
-    editPoints.push([+e.latlng.lat.toFixed(4), +e.latlng.lng.toFixed(4)]);
-    drawEdit();
+  // ---------- Zone bearbeiten (Vollbild, Fadenkreuz in der Mitte) ----------
+  var zMap = null, zLine, zDots, zPoints = [];
+  $('btn-edit-zone').addEventListener('click', openZoneEditor);
+  function openZoneEditor() {
+    if (!$('zone-fs').classList.contains('hidden')) return; // schon offen
+    $('zone-fs').classList.remove('hidden');
+    if (!zMap) {
+      zMap = L.map('zone-map', { zoomControl: true });
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 18, attribution: '© OpenStreetMap' }).addTo(zMap);
+      L.polygon(zone, { color: '#e3001b', weight: 1, fillOpacity: 0.12, interactive: false }).addTo(zMap);
+      zLine = L.polygon([], { color: '#ffcf5c', weight: 4, fillColor: '#e3001b', fillOpacity: 0.25 }).addTo(zMap);
+      zDots = L.layerGroup().addTo(zMap);
+    }
+    zPoints = [];
+    drawZone();
+    // Ansicht sofort setzen (sonst kann "Punkt setzen" ganz am Anfang ins Leere laufen)
+    zMap.invalidateSize();
+    zMap.fitBounds(L.polygon(zone).getBounds().pad(0.3));
   }
-  function drawEdit() {
-    if (editLayer) map.removeLayer(editLayer);
-    editLayer = L.polygon(editPoints, { color: '#ffcf5c', dashArray: '5 5', fillOpacity: 0.1 }).addTo(map);
-    $('zone-code').value = JSON.stringify(editPoints);
+  function addZonePoint(ll) {
+    zPoints.push([+ll.lat.toFixed(5), +ll.lng.toFixed(5)]);
+    drawZone();
+    if (navigator.vibrate) navigator.vibrate(30);
   }
-  $('btn-zone-undo').addEventListener('click', function () { editPoints.pop(); drawEdit(); });
-  $('btn-zone-save').addEventListener('click', function () {
-    if (editPoints.length < 3) { toast('Mindestens 3 Punkte nötig.'); return; }
-    zone = editPoints.slice(); store.set('zone', zone); zoneLayer.setLatLngs(zone); lastInside = null;
-    toast('Zone gespeichert (auf diesem Handy). ✅');
+  function drawZone() {
+    zLine.setLatLngs(zPoints);
+    zDots.clearLayers();
+    zPoints.forEach(function (p, i) {
+      L.circleMarker(p, { radius: i === 0 ? 8 : 5, color: '#fff', weight: 2, fillColor: i === 0 ? '#00e5ff' : '#ffcf5c', fillOpacity: 1, interactive: false }).addTo(zDots);
+    });
+    $('zone-count').textContent = zPoints.length + ' Punkt' + (zPoints.length === 1 ? '' : 'e');
+  }
+  $('zfs-add').addEventListener('click', function () { addZonePoint(zMap.getCenter()); });
+  $('zfs-undo').addEventListener('click', function () { zPoints.pop(); drawZone(); });
+  $('zfs-clear').addEventListener('click', function () { if (zPoints.length && confirm('Alle neuen Punkte löschen?')) { zPoints = []; drawZone(); } });
+  function closeZoneEditor() { $('zone-fs').classList.add('hidden'); }
+  $('zfs-cancel').addEventListener('click', function () {
+    if (zPoints.length && !confirm('Abbrechen? Die neuen Punkte gehen verloren.')) return;
+    closeZoneEditor();
   });
-  $('btn-zone-reset').addEventListener('click', function () {
-    if (!confirm('Zone auf Standard zurücksetzen?')) return;
-    zone = C.mainzZone; try { localStorage.removeItem('gta05_zone'); } catch (e) {}
-    editPoints = zone.slice(); editFresh = true; zoneLayer.setLatLngs(zone); drawEdit(); lastInside = null;
+  $('zfs-save').addEventListener('click', function () {
+    if (zPoints.length < 3) { toast('Mindestens 3 Punkte nötig.'); return; }
+    zone = zPoints.slice(); store.set('zone', zone); lastInside = null;
+    if (zoneLayer) zoneLayer.setLatLngs(zone);
+    closeZoneEditor();
+    $('zone-code').value = 'MAINZ-ZONE: ' + JSON.stringify(zone);
+    $('zone-done').classList.remove('hidden');
   });
+  $('zone-copy').addEventListener('click', function () {
+    var t = $('zone-code'); t.select();
+    var done = function () { toast('Kopiert! Jetzt bei Claude einfügen. 📋'); };
+    if (navigator.clipboard) navigator.clipboard.writeText(t.value).then(done, function () { document.execCommand('copy'); done(); });
+    else { document.execCommand('copy'); done(); }
+  });
+  $('zone-done-ok').addEventListener('click', function () { $('zone-done').classList.add('hidden'); });
 
   // ---------- Crew (Namen für das Tippspiel) ----------
   var people = C.crew.map(function (p) { return { name: p.short || p.name }; });
-
-  // ---------- Fangesang ----------
-  var lastChant = -1;
-  $('btn-chant').addEventListener('click', function () {
-    var i; do { i = Math.floor(Math.random() * I.chants.length); } while (i === lastChant && I.chants.length > 1);
-    lastChant = i;
-    var el = $('chant'); el.textContent = I.chants[i];
-    el.classList.remove('pop'); void el.offsetWidth; el.classList.add('pop');
-    if (navigator.vibrate) navigator.vibrate([80, 40, 80, 40, 200]);
-    if ($('chant-voice').checked && window.speechSynthesis) {
-      try {
-        speechSynthesis.cancel();
-        var u = new SpeechSynthesisUtterance(I.chants[i].replace(/[()„“]/g, ''));
-        u.lang = 'de-DE'; u.rate = 1.1; u.pitch = 1.3; u.volume = 1;
-        speechSynthesis.speak(u);
-      } catch (e) {}
-    }
-  });
 
   // ---------- Tippspiel ----------
   var tips = store.get('tips', { tips: {}, result: ['', ''] });
