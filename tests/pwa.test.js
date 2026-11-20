@@ -4,11 +4,15 @@ const { chromium } = require('playwright');
 const http = require('http'), fs = require('fs'), path = require('path'), assert = require('assert');
 const root = path.resolve(__dirname, '..');
 const types = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css', '.png': 'image/png', '.jpg': 'image/jpeg', '.webmanifest': 'application/manifest+json' };
+let marker = 'VERSION-A'; // simuliert eine neue App-Version auf dem Server
 const server = http.createServer((req, res) => {
   let p = decodeURIComponent(req.url.split('?')[0]); if (p.endsWith('/')) p += 'index.html';
   const f = path.join(root, p);
   if (!f.startsWith(root) || !fs.existsSync(f)) { res.writeHead(404); return res.end(); }
-  res.writeHead(200, { 'Content-Type': types[path.extname(f)] || 'application/octet-stream' }); fs.createReadStream(f).pipe(res);
+  // wie GitHub Pages: Browser darf 10 Minuten zwischenspeichern
+  const head = { 'Content-Type': types[path.extname(f)] || 'application/octet-stream', 'Cache-Control': 'max-age=600' };
+  if (p.endsWith('index.html')) { res.writeHead(200, head); return res.end(fs.readFileSync(f, 'utf8').replace('</body>', '<i id="marker">' + marker + '</i></body>')); }
+  res.writeHead(200, head); fs.createReadStream(f).pipe(res);
 }).listen(0, async () => {
   const url = 'http://localhost:' + server.address().port + '/';
   const browser = await chromium.launch();
@@ -35,6 +39,10 @@ const server = http.createServer((req, res) => {
     await page.reload();
     assert.ok(/Augsburg/.test(await page.textContent('h1'))); console.log('✔ App startet auch offline (Funkloch)');
     await ctx.setOffline(false);
+    marker = 'VERSION-B';
+    await page.goto(url); // wie: App-Icon antippen (kein Neuladen-Knopf)
+    assert.strictEqual(await page.textContent('#marker'), 'VERSION-B'); console.log('✔ Neue Version kommt sofort an (trotz 10-Min-Zwischenspeicher)');
+    assert.ok(await page.isVisible('#btn-copy-link') && await page.isVisible('#btn-whatsapp')); console.log('✔ Weiterleiten-Knöpfe sichtbar');
     assert.deepStrictEqual(errors, []); console.log('✔ Keine JavaScript-Fehler');
     console.log('\nAlle PWA-Tests bestanden.');
   } catch (e) { console.error('✘', e.message); process.exitCode = 1; }

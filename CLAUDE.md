@@ -25,7 +25,7 @@ Kleine Spaß-Web-App für die Auswärtsfahrt zum Spiel **FC Augsburg – 1. FSV 
   Auf der Startseite erscheint „📲 Jetzt installieren“, wenn der Browser es anbietet (Chrome/Samsung Internet).
 
 - **App weiterleiten** (neu 20.11.): Karte auf der Startseite mit „📤 Teilen“ (Handy-Teilen-Menü),
-  „💬 WhatsApp“ und „🔗 Link kopieren“. Link + Text stehen in `js/data.js` (`appUrl`, `shareText`).
+  „💬 WhatsApp“ und „🔗 Link kopieren“ – direkt unter dem Startbild. Link + Text stehen in `js/data.js` (`appUrl`, `shareText`).
 - App-Name unter dem Icon: **„Augsburg Away“** (`manifest.webmanifest` → `short_name`).
 
 ## Dateien
@@ -45,6 +45,9 @@ Kleine Spaß-Web-App für die Auswärtsfahrt zum Spiel **FC Augsburg – 1. FSV 
 - Routen sind ungefähre Linien, für echte Navigation gibt es „In Google Maps öffnen“.
 - Kein „GTA“-Logo/Originalgrafik, nur ein eigener Retro-Stil im ähnlichen Look.
 - Stadtplan mit Kneipen: vom Nutzer gestrichen.
+- Service Worker lädt mit `cache: 'no-cache'` (fragt immer beim Server nach). Vorher hat die installierte App
+  bis zu 10 Min. eine alte Startseite aus dem Browser-Zwischenspeicher gezeigt (Teilen-Knöpfe fehlten, 20.11.).
+  Der PWA-Test stellt genau das nach („Neue Version kommt sofort an“).
 - Bierzähler: am 20.11. auf Wunsch entfernt („macht für die Fahrt keinen Sinn“).
 - Fangesang-Knopf: am 20.11. entfernt (Computerstimme klang schlecht).
 - Zonen-Editor: Antippen der Karte setzt KEINE Punkte mehr (am Handy hat sich nur die Karte verschoben) –

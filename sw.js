@@ -1,7 +1,7 @@
 /* Service Worker: macht die App installierbar und offline nutzbar.
    Strategie "erst Internet, dann Speicher": Bei Netz immer die neueste Version,
    im Funkloch die zuletzt geladene. Kartenbilder (OpenStreetMap) werden nicht gespeichert. */
-var CACHE = 'augsburg05-v1';
+var CACHE = 'augsburg-away-v2';
 var FILES = ['./', 'index.html', 'css/style.css', 'js/logic.js', 'js/data.js', 'js/app.js',
   'vendor/leaflet/leaflet.css', 'vendor/leaflet/leaflet.js', 'img/hero.jpg',
   'img/crew1.jpg', 'img/crew2.jpg', 'img/crew3.jpg', 'img/icons/icon-192.png', 'manifest.webmanifest'];
@@ -19,8 +19,10 @@ self.addEventListener('activate', function (e) {
 self.addEventListener('fetch', function (e) {
   var url = new URL(e.request.url);
   if (e.request.method !== 'GET' || url.origin !== location.origin) return; // Karten usw. direkt aus dem Netz
+  // cache: 'no-cache' = beim Server nachfragen, ob es eine neue Version gibt (kein veralteter Browser-Zwischenspeicher)
   e.respondWith(
-    fetch(e.request).then(function (res) {
+    fetch(e.request.url, { cache: 'no-cache', credentials: 'same-origin' }).then(function (res) {
+      if (!res.ok) return res;
       var copy = res.clone();
       caches.open(CACHE).then(function (c) { c.put(e.request, copy); });
       return res;
