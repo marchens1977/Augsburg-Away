@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#1a0b2e">
+  <title>Grand Tour Augsburg – Mainz 05 auswärts</title>
+  <link rel="stylesheet" href="vendor/leaflet/leaflet.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <main>
+    <!-- START -->
+    <section id="tab-start" class="tab active">
+      <div class="hero">
+        <div class="sun"></div>
+        <div class="palms">🌴 🌴</div>
+        <h1 class="logo"><span class="l1">Grand Tour</span><span class="l2">Augsburg</span><span class="l3">Mainz 05 · Auswärtsfahrt</span></h1>
+        <div class="crew" id="crew"></div>
+        <div class="car">🚘 <small>Mercedes · voll besetzt · Kurs: Süden</small></div>
+      </div>
+
+      <div class="card mission">
+        <div class="mission-label">NEUE MISSION</div>
+        <h2>Auswärtssieg in Augsburg</h2>
+        <p>Ziel: WWK Arena · Sonntag, 22.11.<br>Belohnung: <b>3 Punkte</b> + ewiger Ruhm</p>
+        <div class="countdown" id="countdown"></div>
+        <div class="stars" id="stars" title="Fahndungs-Level"></div>
+        <small class="muted">Fahndungs-Level steigt mit jedem Bier 😇</small>
+      </div>
+    </section>
+
+    <!-- ANFAHRT -->
+    <section id="tab-route" class="tab">
+      <div id="map"></div>
+      <div class="card">
+        <div class="row">
+          <button id="btn-gps" class="btn primary">📍 GPS starten</button>
+          <button id="btn-follow" class="btn">🎯 Folgen: an</button>
+        </div>
+        <div id="gps-status" class="muted">GPS aus.</div>
+        <div id="gps-stats" class="stats"></div>
+      </div>
+      <div class="card" id="route-list"></div>
+      <div class="card">
+        <h3>🔴 Mainz-Gebiet</h3>
+        <p class="muted">Verlässt ihr die rote Zone, gibt’s Alarm.</p>
+        <div class="row">
+          <button id="btn-test-alarm" class="btn">🚨 Alarm testen</button>
+          <button id="btn-edit-zone" class="btn">✏️ Zone bearbeiten</button>
+        </div>
+        <div id="zone-editor" class="hidden">
+          <p>Tippe auf der Karte nacheinander die Eckpunkte der Zone an.</p>
+          <div class="row">
+            <button id="btn-zone-undo" class="btn">↩️ Punkt zurück</button>
+            <button id="btn-zone-save" class="btn primary">💾 Speichern</button>
+            <button id="btn-zone-reset" class="btn">♻️ Standard</button>
+          </div>
+          <textarea id="zone-code" readonly rows="3"></textarea>
+          <small class="muted">Diesen Text kannst du an Claude schicken, damit die Zone für alle fest eingebaut wird.</small>
+        </div>
+      </div>
+    </section>
+
+    <!-- BIER -->
+    <section id="tab-beer" class="tab">
+      <div class="card">
+        <h2>🍺 Bierzähler</h2>
+        <div id="beer-summary" class="stats"></div>
+      </div>
+      <div id="beer-people"></div>
+      <div class="card">
+        <h3>📜 Protokoll</h3>
+        <ul id="beer-log" class="log"></ul>
+        <div class="row">
+          <button id="btn-beer-reset" class="btn danger">🗑️ Alles zurücksetzen</button>
+        </div>
+        <small class="muted">Wird nur auf diesem Handy gespeichert. Fahrer trinkt natürlich nur Spezi. 🚗💧</small>
+      </div>
+    </section>
+
+    <!-- GEGNER & STADT -->
+    <section id="tab-info" class="tab">
+      <div class="card"><h2>⚽ Der Gegner: FC Augsburg</h2><dl id="info-club"></dl></div>
+      <div class="card"><h2>🏰 Die Stadt Augsburg</h2><dl id="info-city"></dl></div>
+      <div class="card"><h2>🧭 Tipps für Sonntag</h2><ul id="info-tips"></ul></div>
+    </section>
+  </main>
+
+  <nav class="tabs">
+    <button data-tab="start" class="active">🏠<span>Start</span></button>
+    <button data-tab="route">🗺️<span>Anfahrt</span></button>
+    <button data-tab="beer">🍺<span>Bier</span></button>
+    <button data-tab="info">🏰<span>Augsburg</span></button>
+  </nav>
+
+  <!-- Alarm-Fenster -->
+  <div id="alarm" class="alarm hidden">
+    <div class="alarm-box">
+      <div class="alarm-icon">🚨</div>
+      <h2 id="alarm-title">ACHTUNG!</h2>
+      <p id="alarm-text"></p>
+      <button id="alarm-ok" class="btn primary">Verstanden</button>
+    </div>
+  </div>
+  <div id="toast" class="toast hidden"></div>
+
+  <script src="vendor/leaflet/leaflet.js"></script>
+  <script src="js/logic.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
