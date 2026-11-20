@@ -8,10 +8,10 @@
 
     // Die Crew – Fotos kommen später in den Ordner img/ (crew1.jpg, crew2.jpg, crew3.jpg)
     crew: [
-      // name = auf der Fotokarte, short = im Tippspiel (zwei Jens!)
+      // name = auf der Fotokarte, short = im Tippspiel
       { name: 'Marc', short: 'Marc', photo: 'img/crew1.jpg', emoji: '😎' },
-      { name: 'Jens', short: 'Jens (Sportbrille)', photo: 'img/crew2.jpg', emoji: '🤠' },
-      { name: 'Jens', short: 'Jens (Locken)', photo: 'img/crew3.jpg', emoji: '🥸' }
+      { name: 'Jens B.', short: 'Jens B.', photo: 'img/crew2.jpg', emoji: '🤠' },
+      { name: 'Jens L.', short: 'Jens L.', photo: 'img/crew3.jpg', emoji: '🥸' }
     ],
 
     // 🔴 Mainz-Gebiet – von Marc am 20.11.2026 in der App gezeichnet (12 Punkte).

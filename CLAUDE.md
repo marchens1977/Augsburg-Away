@@ -61,7 +61,7 @@ Letzter Lauf: alle bestanden (20.11.2026, neuer Zonen-Editor, Fangesang entfernt
 
 ## Offene Punkte
 - [x] Fotos der 3 Mitfahrer → Startseite (Comic-Filter)
-- [x] Namen: links Marc, Mitte Jens (Sportbrille), rechts Jens (Locken). Im Tippspiel mit Zusatz, damit man die zwei Jens unterscheidet.
+- [x] Namen: links Marc, Mitte Jens B. (Sportbrille), rechts Jens L. (Locken).
 - [x] Anstoßzeit: So, 22.11.2026, 15:30 Uhr, 10. Spieltag, live auf DAZN (im Internet geprüft: DAZN, buli-tipphilfe.de)
 - [x] Mainz-Zone: von Marc gezeichnet (12 Punkte, Rheinhessen-Gebiet inkl. Bingen, bis südlich Nierstein), fest in `js/data.js` für alle.
 - [ ] Alarm-Text / Sound nach Wunsch anpassen

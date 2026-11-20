@@ -15,6 +15,7 @@ const assert = require('assert');
   assert.strictEqual(await page.locator('.crew-card').count(), 3); console.log('✔ Startseite: 3 Crew-Karten');
   await page.waitForFunction(() => [...document.querySelectorAll('.crew-card img')].every(i => i.complete && i.naturalWidth > 0));
   assert.strictEqual(await page.locator('.crew-card img').count(), 3); console.log('✔ 3 Crew-Fotos geladen');
+  assert.deepStrictEqual(await page.$$eval('.crew-card .name', e => e.map(x => x.textContent)), ['Marc', 'Jens B.', 'Jens L.']); console.log('✔ Namen Marc, Jens B., Jens L.');
   if (require('fs').existsSync(path.resolve(__dirname, '../img/hero.jpg'))) {
     await page.waitForSelector('.hero.has-img'); console.log('✔ Startbild wird angezeigt');
   } else {
@@ -74,7 +75,7 @@ const assert = require('assert');
   await page.fill('[data-tip="2"][data-side="0"]', '0'); await page.fill('[data-tip="2"][data-side="1"]', '1');
   await page.fill('#res-0', '2'); await page.fill('#res-1', '1');
   const rank = await page.textContent('#tip-ranking');
-  assert.ok(/🥇 Jens \(Sportbrille\) – 3 Punkte/.test(rank), rank); console.log('✔ Tippspiel-Siegerehrung');
+  assert.ok(/🥇 Jens B\. – 3 Punkte/.test(rank), rank); console.log('✔ Tippspiel-Siegerehrung');
   for (const i of [0, 1, 2, 3]) await page.click(`[data-b="${i}"]`);
   await page.waitForSelector('#toast:not(.hidden)');
   assert.ok(/BINGO/.test(await page.textContent('#toast'))); console.log('✔ Bingo erkannt');
