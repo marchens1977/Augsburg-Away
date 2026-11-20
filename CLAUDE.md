@@ -47,13 +47,13 @@ Letzter Lauf: alle bestanden (20.11.2026, nach Spiele-Reiter & Fotos).
 
 ## Offene Punkte
 - [x] Fotos der 3 Mitfahrer → Startseite (Comic-Filter)
-- [ ] Namen der Crew eintragen (wer ist wer? Platzhalter: Der Boss / Kumpel 1 / Kumpel 2)
+- [x] Namen: links Marc, Mitte Jens (Sportbrille), rechts Jens (Locken). In Listen mit Zusatz, damit man die zwei Jens unterscheidet.
 - [ ] **Anstoßzeit bestätigen** (Platzhalter: 15:30 Uhr)
 - [ ] Mainz-Zone genau festlegen
 - [ ] Alarm-Text / Sound nach Wunsch anpassen
 - [x] Tippspiel, Fangesang-Knopf, Raststätten-Bingo, km-Sprüche
 - [ ] Optional: gemaltes KI-Startbild (kostet ElevenLabs-Guthaben – nur mit OK)
-- [ ] GitHub Pages einschalten
+- [ ] GitHub Pages einschalten (Branch `main` wurde von Claude befüllt; Einschalten unter Settings → Pages macht Marc)
 - Hinweis Datenschutz: GitHub Pages ist öffentlich – wer den Link hat, sieht auch die Fotos.
 
 ## Test-Liste für Marc (am Handy abhaken)

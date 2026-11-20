@@ -186,7 +186,7 @@
 
   // ---------- Bierzähler ----------
   var beer = store.get('beer', null) || {
-    people: C.crew.map(function (p, i) { return { name: p.name, count: 0, spezi: 0, driver: i === 0 }; }),
+    people: C.crew.map(function (p, i) { return { name: p.short || p.name, count: 0, spezi: 0, driver: i === 0 }; }),
     log: []
   };
   function saveBeer() { store.set('beer', beer); renderBeer(); renderStars(); if (window.__tipsReady) renderTips(); }

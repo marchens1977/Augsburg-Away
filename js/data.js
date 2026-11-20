@@ -8,9 +8,10 @@
 
     // Die Crew – Fotos kommen später in den Ordner img/ (crew1.jpg, crew2.jpg, crew3.jpg)
     crew: [
-      { name: 'Der Boss', photo: 'img/crew1.jpg', emoji: '😎' },
-      { name: 'Kumpel 1', photo: 'img/crew2.jpg', emoji: '🤠' },
-      { name: 'Kumpel 2', photo: 'img/crew3.jpg', emoji: '🥸' }
+      // name = auf der Fotokarte, short = in Bierzähler & Tippspiel (zwei Jens!)
+      { name: 'Marc', short: 'Marc', photo: 'img/crew1.jpg', emoji: '😎' },
+      { name: 'Jens', short: 'Jens (Sportbrille)', photo: 'img/crew2.jpg', emoji: '🤠' },
+      { name: 'Jens', short: 'Jens (Locken)', photo: 'img/crew3.jpg', emoji: '🥸' }
     ],
 
     // 🔴 Mainz-Gebiet (Platzhalter – wird noch genau festgelegt).

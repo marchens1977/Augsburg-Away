@@ -51,7 +51,7 @@ const assert = require('assert');
   await page.fill('[data-tip="2"][data-side="0"]', '0'); await page.fill('[data-tip="2"][data-side="1"]', '1');
   await page.fill('#res-0', '2'); await page.fill('#res-1', '1');
   const rank = await page.textContent('#tip-ranking');
-  assert.ok(/🥇 Kumpel 1 – 3 Punkte/.test(rank), rank); console.log('✔ Tippspiel-Siegerehrung');
+  assert.ok(/🥇 Jens \(Sportbrille\) – 3 Punkte/.test(rank), rank); console.log('✔ Tippspiel-Siegerehrung');
   for (const i of [0, 1, 2, 3]) await page.click(`[data-b="${i}"]`);
   await page.waitForSelector('#toast:not(.hidden)');
   assert.ok(/BINGO/.test(await page.textContent('#toast'))); console.log('✔ Bingo erkannt');
