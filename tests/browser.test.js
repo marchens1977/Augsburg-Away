@@ -89,6 +89,8 @@ const assert = require('assert');
   assert.ok(/Fuggerei/.test(await page.textContent('#info-city'))); console.log('✔ Augsburg-Infos da');
   await shot('4-info');
 
+  const html = require('fs').readFileSync(path.resolve(__dirname, '../index.html'), 'utf8');
+  assert.ok(/style\.css\?v=\d+/.test(html) && /app\.js\?v=\d+/.test(html) && /data\.js\?v=\d+/.test(html)); console.log('✔ Versionsnummer an CSS/JS (gegen alten Zwischenspeicher)');
   assert.deepStrictEqual(errors, []); console.log('✔ Keine JavaScript-Fehler');
   await browser.close();
   console.log('\nAlle Browser-Tests bestanden.');

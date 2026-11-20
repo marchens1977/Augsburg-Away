@@ -42,6 +42,10 @@ Kleine Spaß-Web-App für die Auswärtsfahrt zum Spiel **FC Augsburg – 1. FSV 
 - Zonen-Editor: Antippen der Karte setzt KEINE Punkte mehr (am Handy hat sich nur die Karte verschoben) –
   nur noch Fadenkreuz + Knopf. Fehler behoben: erster Punkt ging verloren, wenn man sofort nach dem Öffnen tippte.
 
+## Vor jedem Hochladen
+`sh tools/bump-version.sh` ausführen – setzt `?v=...` an CSS/JS in `index.html`, sonst zeigen Handys bis zu
+10 Minuten (oder länger) die alte Version aus dem Zwischenspeicher. (Problem trat am 20.11. beim Knopf „Zone als Text“ auf.)
+
 ## Tests (nach jeder Änderung laufen lassen)
 ```
 node tests/logic.test.js      # 12 Rechen-Tests (Zone, Entfernungen, Sterne, Countdown, Tippspiel, Bingo, km-Marken …)
