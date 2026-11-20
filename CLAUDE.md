@@ -20,6 +20,10 @@ Kleine Spaß-Web-App für die Auswärtsfahrt zum Spiel **FC Augsburg – 1. FSV 
 - **Kilometer-Sprüche** (neu): Bei GPS-Fahrt kommt bei „Noch 350/300/…/10/1 km“ ein Spruch.
 - **Crew-Fotos** (neu): 3 echte Fotos als Comic-Porträts (`img/crew1-3.jpg`), Startseite mit gezeichnetem Auto.
 
+- **Installierbar (Web-App/PWA)** (neu 20.11.): `manifest.webmanifest` + Icons aus dem Startbild (`img/icons/`),
+  `sw.js` (Service Worker, „erst Internet, dann Speicher“ → immer neueste Version, im Funkloch die letzte).
+  Auf der Startseite erscheint „📲 Jetzt installieren“, wenn der Browser es anbietet (Chrome/Samsung Internet).
+
 ## Dateien
 - `index.html` – Seitengerüst · `css/style.css` – Aussehen · `js/app.js` – Bedienung
 - `js/data.js` – **alle Inhalte & Einstellungen** (Anstoßzeit, Crew-Namen/Fotos, Mainz-Zone, Routen, Infotexte)
@@ -51,6 +55,7 @@ Kleine Spaß-Web-App für die Auswärtsfahrt zum Spiel **FC Augsburg – 1. FSV 
 node tests/logic.test.js      # 12 Rechen-Tests (Zone, Entfernungen, Sterne, Countdown, Tippspiel, Bingo, km-Marken …)
 node tests/browser.test.js    # Klick-Test im Browser in Handy-Größe, inkl. simulierter GPS-Fahrt aus Mainz raus
 SCREENSHOTS=/pfad node tests/browser.test.js   # zusätzlich Bildschirmfotos
+node tests/pwa.test.js        # Installierbarkeit: Manifest, Icon-Größen, Service Worker, Start im Offline-Modus
 ```
 Letzter Lauf: alle bestanden (20.11.2026, neuer Zonen-Editor, Fangesang entfernt; Zonen-Test 8× hintereinander grün).
 
@@ -76,5 +81,7 @@ Letzter Lauf: alle bestanden (20.11.2026, neuer Zonen-Editor, Fangesang entfernt
 - [ ] Zone bearbeiten: Punkte setzen, Fertig, Text kopieren klappt am Handy
 - [ ] Tippspiel: Tipps eintragen, nach dem Spiel Endergebnis → Siegerehrung
 - [ ] Bingo: Felder antippen, bei voller Reihe kommt „BINGO!“
+- [ ] App installieren: Knopf „Jetzt installieren“ oder Browser-Menü ⋮ → „Zum Startbildschirm hinzufügen“ – Icon = euer Bild
+- [ ] Installierte App öffnet ohne Browser-Leiste
 - [ ] Sonntag live: Alarm kommt beim Verlassen von Mainz
 - [ ] Sonntag live: Kilometer-Sprüche erscheinen unterwegs

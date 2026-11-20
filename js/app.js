@@ -281,6 +281,26 @@
     $('info-tips').innerHTML = I.tips.map(function (t) { return '<li>' + esc(t) + '</li>'; }).join('');
   }
 
+  // ---------- Als App installieren ----------
+  var installEvent = null;
+  var standalone = window.matchMedia('(display-mode: standalone)').matches || navigator.standalone;
+  if ('serviceWorker' in navigator && location.protocol.indexOf('http') === 0) {
+    navigator.serviceWorker.register('sw.js').catch(function () {});
+  }
+  window.addEventListener('beforeinstallprompt', function (e) {
+    e.preventDefault(); installEvent = e;
+    if (!standalone) $('install-card').classList.remove('hidden');
+  });
+  $('btn-install').addEventListener('click', function () {
+    if (!installEvent) return;
+    installEvent.prompt();
+    installEvent.userChoice.then(function (r) {
+      if (r.outcome === 'accepted') $('install-card').classList.add('hidden');
+      installEvent = null;
+    });
+  });
+  window.addEventListener('appinstalled', function () { $('install-card').classList.add('hidden'); toast('Installiert! Schau auf deinen Startbildschirm. 📲'); });
+
   // ---------- Start ----------
   renderCrew(); renderCountdown(); setInterval(renderCountdown, 1000);
   renderRoutes(); renderInfo(); renderTips(); renderBingo(); renderStars();

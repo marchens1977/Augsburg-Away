@@ -134,3 +134,7 @@ dd { margin: 2px 0 0; }
 .hero.has-img .crew, .hero.has-img .car { display: none; }
 .hero.has-img { min-height: 0; padding-bottom: 70px; }
 .hero.has-img .palms { font-size: 48px; }
+
+/* Installieren-Hinweis */
+.install { border: 2px solid var(--cyan); text-align: center; }
+.install p { margin: 6px 0 10px; }
