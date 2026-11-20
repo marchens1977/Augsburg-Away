@@ -91,7 +91,40 @@
     return Math.min(5, Math.floor(totalBeers / 3));
   }
 
+  // Tippspiel-Punkte: 3 = exakt, 2 = richtige Tordifferenz, 1 = richtige Tendenz, 0 = daneben
+  // tip/result: [Tore Mainz, Tore Augsburg]
+  function tipPoints(tip, result) {
+    if (!tip || !result || tip[0] === '' || tip[1] === '' || result[0] === '' || result[1] === '') return null;
+    var t0 = +tip[0], t1 = +tip[1], r0 = +result[0], r1 = +result[1];
+    if (t0 === r0 && t1 === r1) return 3;
+    if (t0 - t1 === r0 - r1) return 2;
+    if (Math.sign(t0 - t1) === Math.sign(r0 - r1)) return 1;
+    return 0;
+  }
+
+  // Bingo: marked = Liste von true/false (size*size Felder). Gibt die Zahl der fertigen Reihen zurück.
+  function bingoLines(marked, size) {
+    var lines = 0, r, c, ok;
+    for (r = 0; r < size; r++) { ok = true; for (c = 0; c < size; c++) ok = ok && !!marked[r * size + c]; if (ok) lines++; }
+    for (c = 0; c < size; c++) { ok = true; for (r = 0; r < size; r++) ok = ok && !!marked[r * size + c]; if (ok) lines++; }
+    ok = true; for (r = 0; r < size; r++) ok = ok && !!marked[r * size + r]; if (ok) lines++;
+    ok = true; for (r = 0; r < size; r++) ok = ok && !!marked[r * size + (size - 1 - r)]; if (ok) lines++;
+    return lines;
+  }
+
+  // Kilometer-Marken: Wurde zwischen zwei Messungen eine "Noch X km"-Marke unterschritten?
+  // Marken: alle 50 km, plus 25, 10 und 1 km. Gibt die Marke zurück oder null.
+  function kmMark(prevKm, nowKm) {
+    if (prevKm === null || prevKm === undefined || nowKm >= prevKm) return null;
+    var marks = [350, 300, 250, 200, 150, 100, 50, 25, 10, 1];
+    for (var i = marks.length - 1; i >= 0; i--) if (prevKm > marks[i] && nowKm <= marks[i]) return marks[i];
+    return null;
+  }
+
   var api = {
+    tipPoints: tipPoints,
+    bingoLines: bingoLines,
+    kmMark: kmMark,
     pointInPolygon: pointInPolygon,
     distanceKm: distanceKm,
     pathLengthKm: pathLengthKm,

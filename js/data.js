@@ -80,6 +80,41 @@
     ]
   };
 
+  // Raststätten-Bingo: 16 Felder (4×4)
+  var BINGO = [
+    'Stau am Frankfurter Kreuz', 'Bayern-Fan an der Tanke', 'Würstchen über 6 €', 'WC kostet 1 €',
+    'Wohnmobil-Kolonne', 'Andere 05er überholen', 'Jemand schläft ein', 'Blitzer!',
+    'Falsche Ausfahrt', '„Sind wir bald da?“', 'Augsburg-Schal gesichtet', 'Baustelle mit 60',
+    'Hupen für 05-Fans', 'Kaffee verschüttet', 'Navi will umleiten', 'Bier Nr. 3 vor Ulm'
+  ];
+
+  // Fangesänge (kurze Schlachtrufe)
+  var CHANTS = [
+    'NULLFÜNF! NULLFÜNF! NULLFÜNF!',
+    'AUSWÄRTSSIEG! AUSWÄRTSSIEG!',
+    'Steht auf, wenn ihr Mainzer seid!',
+    'Hier regiert der Ef-Es-Vau!',
+    'Rot und Weiß, wir sind Mainzer – und wir fahren bis nach Augsburg!',
+    'Oh, wie ist das schön! So was hat man lange nicht gesehn!',
+    'Wir sind Mainzer, wir sind laut, auswärts wird Punkte geklaut!',
+    'Helau! (Ja, auch im November.)'
+  ];
+
+  // Sprüche für die "Noch X km"-Marken unterwegs
+  var KM_LINES = {
+    350: 'Noch 350 km. Die Reise hat gerade erst begonnen. 🍺',
+    300: 'Noch 300 km. Erste Pinkelpause schon geplant?',
+    250: 'Noch 250 km. Mainz ist weg, die Stimmung ist da!',
+    200: 'Noch 200 km. Halbzeit der Hinfahrt – Getränkecheck!',
+    150: 'Noch 150 km. Bayern rückt bedrohlich näher. 😬',
+    100: 'Noch 100 km! Schals raus, Fenster runter (kurz).',
+    50: 'Noch 50 km! Augsburg zittert schon.',
+    25: 'Noch 25 km! Stimme ölen!',
+    10: 'Noch 10 km! NULLFÜNF! NULLFÜNF!',
+    1: 'Ziel erreicht! Mission „Auswärtssieg“ startet jetzt. 🏟️'
+  };
+
+  INFO.bingo = BINGO; INFO.chants = CHANTS; INFO.kmLines = KM_LINES;
   root.CONFIG = CONFIG;
   root.INFO = INFO;
   if (typeof module !== 'undefined' && module.exports) module.exports = { CONFIG: CONFIG, INFO: INFO };

@@ -5,7 +5,7 @@ Kleine Spaß-Web-App für die Auswärtsfahrt zum Spiel **FC Augsburg – 1. FSV 
 3 Leute, 1 Mercedes. Läuft im Handy-Browser (GitHub Pages), wird per WhatsApp-Link geteilt.
 
 ## Aktueller Stand (20.11.2026)
-- **Start**: Retro-/Vice-Look (Sonnenuntergang, Palmen, schräge Schrift), 3 Crew-Karten (noch Emoji-Platzhalter),
+- **Start**: Retro-/Vice-Look (Sonnenuntergang, Palmen, schräge Schrift), 3 Crew-Karten mit Comic-Fotos,
   Countdown bis Anpfiff, „Fahndungs-Sterne“ (steigen mit der Bierzahl).
 - **Anfahrt**: Karte (Leaflet + OpenStreetMap) mit 2 Routen (über Stuttgart / über Würzburg), Stadion- und Mainz-Marker,
   rote Mainz-Zone, GPS-Tracker (eigene Position, gefahrene Spur, km bis Augsburg, Tempo),
@@ -15,13 +15,19 @@ Kleine Spaß-Web-App für die Auswärtsfahrt zum Spiel **FC Augsburg – 1. FSV 
   Pinkelpausen-Prognose, Tabellenführer, Protokoll. Fahrer-Häkchen: Fahrer zählt nur Spezi;
   wer schon Bier hatte, kann nicht Fahrer werden.
 - **Augsburg**: Infos zum FCA, zur Stadt und Tipps für Sonntag.
+- **Spiele** (neu 20.11.): Fangesang-Knopf (zufälliger Schlachtruf, Handy spricht ihn per Sprachausgabe),
+  Tippspiel mit Siegerehrung (3/2/1 Punkte), Raststätten-Bingo 4×4 (erkennt Reihen, Spalten, Diagonalen).
+- **Kilometer-Sprüche** (neu): Bei GPS-Fahrt kommt bei „Noch 350/300/…/10/1 km“ ein Spruch.
+- **Crew-Fotos** (neu): 3 echte Fotos als Comic-Porträts (`img/crew1-3.jpg`), Startseite mit gezeichnetem Auto.
 
 ## Dateien
 - `index.html` – Seitengerüst · `css/style.css` – Aussehen · `js/app.js` – Bedienung
 - `js/data.js` – **alle Inhalte & Einstellungen** (Anstoßzeit, Crew-Namen/Fotos, Mainz-Zone, Routen, Infotexte)
 - `js/logic.js` – reine Rechenfunktionen (Zone, Entfernung, Titel …)
 - `vendor/leaflet/` – Kartenbibliothek (lokal kopiert, Version 1.9.4)
-- `img/` – hier kommen die Fotos hin (`crew1.jpg`, `crew2.jpg`, `crew3.jpg`)
+- `img/` – Crew-Porträts (`crew1.jpg` Sonnenbrille/gestreiftes Hemd, `crew2.jpg` orange Sportbrille, `crew3.jpg` lange Locken)
+- `tools/comic.py` – Hilfsprogramm: macht aus einem Foto ein Comic-Porträt
+  (`python3 tools/comic.py foto.jpg img/crewX.jpg links oben rechts unten`). Originalfotos liegen NICHT im Repository.
 
 ## Wichtige Entscheidungen
 - Kein Server: Alles (Bierzähler, GPS-Spur, eigene Zone) wird **nur auf dem jeweiligen Handy** gespeichert.
@@ -33,19 +39,20 @@ Kleine Spaß-Web-App für die Auswärtsfahrt zum Spiel **FC Augsburg – 1. FSV 
 
 ## Tests (nach jeder Änderung laufen lassen)
 ```
-node tests/logic.test.js      # 10 Rechen-Tests (Zone, Entfernungen, Titel, Countdown …)
+node tests/logic.test.js      # 14 Rechen-Tests (Zone, Entfernungen, Titel, Countdown, Tippspiel, Bingo, km-Marken …)
 node tests/browser.test.js    # Klick-Test im Browser in Handy-Größe, inkl. simulierter GPS-Fahrt aus Mainz raus
 SCREENSHOTS=/pfad node tests/browser.test.js   # zusätzlich Bildschirmfotos
 ```
-Letzter Lauf: alle bestanden (20.11.2026).
+Letzter Lauf: alle bestanden (20.11.2026, nach Spiele-Reiter & Fotos).
 
 ## Offene Punkte
-- [ ] Fotos der 3 Mitfahrer → Startseite (evtl. als gezeichnete Comic-Figuren)
-- [ ] Namen der Crew eintragen
+- [x] Fotos der 3 Mitfahrer → Startseite (Comic-Filter)
+- [ ] Namen der Crew eintragen (wer ist wer? Platzhalter: Der Boss / Kumpel 1 / Kumpel 2)
 - [ ] **Anstoßzeit bestätigen** (Platzhalter: 15:30 Uhr)
 - [ ] Mainz-Zone genau festlegen
 - [ ] Alarm-Text / Sound nach Wunsch anpassen
-- [ ] Ideen: Tipp-Spiel fürs Ergebnis, Fangesang-Knopf, Raststätten-Bingo, Spiel-Ticker-Knopf
+- [x] Tippspiel, Fangesang-Knopf, Raststätten-Bingo, km-Sprüche
+- [ ] Optional: gemaltes KI-Startbild (kostet ElevenLabs-Guthaben – nur mit OK)
 - [ ] GitHub Pages einschalten
 - Hinweis Datenschutz: GitHub Pages ist öffentlich – wer den Link hat, sieht auch die Fotos.
 
@@ -56,4 +63,9 @@ Letzter Lauf: alle bestanden (20.11.2026).
 - [ ] „Alarm testen“: rotes Blinken, Vibration, Sirenen-Ton
 - [ ] Bierzähler: Plus/Minus, Namen ändern, Fahrer-Häkchen
 - [ ] Nach Schließen und Neuöffnen sind die Bierzahlen noch da
+- [ ] Fotos auf der Startseite sehen gut aus
+- [ ] Fangesang-Knopf: Handy spricht den Spruch (Ton an!)
+- [ ] Tippspiel: Tipps eintragen, nach dem Spiel Endergebnis → Siegerehrung
+- [ ] Bingo: Felder antippen, bei voller Reihe kommt „BINGO!“
 - [ ] Sonntag live: Alarm kommt beim Verlassen von Mainz
+- [ ] Sonntag live: Kilometer-Sprüche erscheinen unterwegs

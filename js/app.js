@@ -82,7 +82,7 @@
   $('btn-follow').addEventListener('click', function () { setFollow(!follow); });
 
   // ---------- GPS ----------
-  var lastInside = null, track = store.get('track', []);
+  var lastInside = null, track = store.get('track', []), lastKm = null;
   $('btn-gps').addEventListener('click', function () {
     if (watchId !== null) { navigator.geolocation.clearWatch(watchId); watchId = null; $('btn-gps').textContent = '📍 GPS starten'; $('gps-status').textContent = 'GPS aus.'; return; }
     if (!navigator.geolocation) { $('gps-status').textContent = 'Dieses Handy kann kein GPS im Browser. 😢'; return; }
@@ -111,6 +111,10 @@
       stat(Math.round(home) + ' km', 'weg von Mainz') +
       stat(speed !== null ? Math.round(speed) + ' km/h' : '–', 'Tempo') +
       stat(L_.pathLengthKm(track).toFixed(0) + ' km', 'gefahren');
+
+    var mark = L_.kmMark(lastKm, left);
+    if (mark && I.kmLines[mark]) { toast('🛣️ ' + I.kmLines[mark]); if (navigator.vibrate) navigator.vibrate([100, 50, 100]); }
+    lastKm = left;
 
     var inside = L_.pointInPolygon(pos, zone);
     var change = L_.zoneTransition(lastInside, inside);
@@ -185,7 +189,7 @@
     people: C.crew.map(function (p, i) { return { name: p.name, count: 0, spezi: 0, driver: i === 0 }; }),
     log: []
   };
-  function saveBeer() { store.set('beer', beer); renderBeer(); renderStars(); }
+  function saveBeer() { store.set('beer', beer); renderBeer(); renderStars(); if (window.__tipsReady) renderTips(); }
   function totalBeers() { return beer.people.reduce(function (s, p) { return s + p.count; }, 0); }
 
   function renderBeer() {
@@ -253,6 +257,78 @@
     beer.people.forEach(function (p) { p.count = 0; p.spezi = 0; }); beer.log = []; saveBeer();
   });
 
+  // ---------- Fangesang ----------
+  var lastChant = -1;
+  $('btn-chant').addEventListener('click', function () {
+    var i; do { i = Math.floor(Math.random() * I.chants.length); } while (i === lastChant && I.chants.length > 1);
+    lastChant = i;
+    var el = $('chant'); el.textContent = I.chants[i];
+    el.classList.remove('pop'); void el.offsetWidth; el.classList.add('pop');
+    if (navigator.vibrate) navigator.vibrate([80, 40, 80, 40, 200]);
+    if ($('chant-voice').checked && window.speechSynthesis) {
+      try {
+        speechSynthesis.cancel();
+        var u = new SpeechSynthesisUtterance(I.chants[i].replace(/[()„“]/g, ''));
+        u.lang = 'de-DE'; u.rate = 1.1; u.pitch = 1.3; u.volume = 1;
+        speechSynthesis.speak(u);
+      } catch (e) {}
+    }
+  });
+
+  // ---------- Tippspiel ----------
+  var tips = store.get('tips', { tips: {}, result: ['', ''] });
+  function renderTips() {
+    $('tips').innerHTML = beer.people.map(function (p, i) {
+      var t = tips.tips[i] || ['', ''];
+      return '<div class="tip-row"><span>' + esc(p.name) + '</span>' +
+        '<input type="number" min="0" max="20" inputmode="numeric" data-tip="' + i + '" data-side="0" value="' + esc(t[0]) + '"> : ' +
+        '<input type="number" min="0" max="20" inputmode="numeric" data-tip="' + i + '" data-side="1" value="' + esc(t[1]) + '"></div>';
+    }).join('');
+    $('res-0').value = tips.result[0]; $('res-1').value = tips.result[1];
+    renderRanking();
+  }
+  function renderRanking() {
+    var rows = beer.people.map(function (p, i) { return { name: p.name, pts: L_.tipPoints(tips.tips[i], tips.result) }; });
+    if (rows.every(function (r) { return r.pts === null; })) { $('tip-ranking').innerHTML = '<p class="muted">Nach dem Spiel oben das Endergebnis eintragen – dann gibt’s die Siegerehrung.</p>'; return; }
+    rows.sort(function (a, b) { return (b.pts || 0) - (a.pts || 0); });
+    var medals = ['🥇', '🥈', '🥉'];
+    $('tip-ranking').innerHTML = '<div class="rank"><h3>🏆 Siegerehrung</h3>' + rows.map(function (r, i) {
+      return '<div>' + medals[i] + ' <b>' + esc(r.name) + '</b> – ' + (r.pts === null ? 'kein Tipp 🙈' : r.pts + ' Punkt' + (r.pts === 1 ? '' : 'e')) +
+        (r.pts === 3 ? ' 🔮 Hellseher!' : r.pts === 0 ? ' 🤡' : '') + '</div>';
+    }).join('') + '</div>';
+  }
+  $('tips').addEventListener('input', function (e) {
+    var i = e.target.dataset.tip; if (i === undefined) return;
+    tips.tips[i] = tips.tips[i] || ['', ''];
+    tips.tips[i][+e.target.dataset.side] = e.target.value;
+    store.set('tips', tips); renderRanking();
+  });
+  ['res-0', 'res-1'].forEach(function (id, side) {
+    $(id).addEventListener('input', function () { tips.result[side] = $(id).value; store.set('tips', tips); renderRanking(); });
+  });
+
+  // ---------- Raststätten-Bingo ----------
+  function shuffle(a) { a = a.slice(); for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var x = a[i]; a[i] = a[j]; a[j] = x; } return a; }
+  var bingo = store.get('bingo', null);
+  if (!bingo || bingo.fields.length !== 16) bingo = { fields: shuffle(I.bingo).slice(0, 16), marked: [] };
+  var bingoCount = L_.bingoLines(bingo.marked, 4);
+  function renderBingo() {
+    $('bingo').innerHTML = bingo.fields.map(function (f, i) {
+      return '<button data-b="' + i + '" class="' + (bingo.marked[i] ? 'on' : '') + '">' + esc(f) + '</button>';
+    }).join('');
+  }
+  $('bingo').addEventListener('click', function (e) {
+    var b = e.target.closest('button'); if (!b) return;
+    var i = +b.dataset.b; bingo.marked[i] = !bingo.marked[i];
+    var lines = L_.bingoLines(bingo.marked, 4);
+    if (lines > bingoCount) { toast(lines === 10 ? '🤯 KOMPLETTES BRETT! Ihr habt die A8 durchgespielt!' : '🎉 BINGO! (' + lines + ' Reihe' + (lines > 1 ? 'n' : '') + ') – Runde geht auf den Letzten!'); if (navigator.vibrate) navigator.vibrate([200, 80, 200, 80, 400]); }
+    bingoCount = lines; store.set('bingo', bingo); renderBingo();
+  });
+  $('btn-bingo-reset').addEventListener('click', function () {
+    if (!confirm('Neues Bingo-Feld mischen? Die Kreuzchen gehen verloren.')) return;
+    bingo = { fields: shuffle(I.bingo).slice(0, 16), marked: [] }; bingoCount = 0; store.set('bingo', bingo); renderBingo();
+  });
+
   // ---------- Infos ----------
   function renderInfo() {
     var dl = function (rows) { return rows.map(function (r) { return '<dt>' + esc(r[0]) + '</dt><dd>' + esc(r[1]) + '</dd>'; }).join(''); };
@@ -264,4 +340,5 @@
   // ---------- Start ----------
   renderCrew(); renderCountdown(); setInterval(renderCountdown, 1000);
   renderRoutes(); renderBeer(); renderStars(); renderInfo();
+  renderTips(); renderBingo(); window.__tipsReady = true;
 })();

@@ -17,7 +17,17 @@
         <div class="palms">🌴 🌴</div>
         <h1 class="logo"><span class="l1">Grand Tour</span><span class="l2">Augsburg</span><span class="l3">Mainz 05 · Auswärtsfahrt</span></h1>
         <div class="crew" id="crew"></div>
-        <div class="car">🚘 <small>Mercedes · voll besetzt · Kurs: Süden</small></div>
+        <div class="car">
+          <svg viewBox="0 0 300 110" class="car-svg" aria-label="Unser Auto">
+            <defs><linearGradient id="cb" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#3a3f4a"/><stop offset="1" stop-color="#0b0c10"/></linearGradient></defs>
+            <path d="M18 78 Q14 60 40 56 L88 50 Q112 26 150 22 L196 22 Q224 24 246 48 L276 54 Q292 58 290 78 Z" fill="url(#cb)" stroke="#ff2d95" stroke-width="3"/>
+            <path d="M98 50 Q118 32 150 30 L170 30 L170 50 Z M178 30 L196 30 Q218 32 234 50 L178 50 Z" fill="#7ad7ff" opacity=".75"/>
+            <rect x="268" y="60" width="16" height="7" rx="3" fill="#ffe27a"/><rect x="20" y="62" width="12" height="6" rx="2" fill="#e3001b"/>
+            <circle cx="78" cy="80" r="18" fill="#111" stroke="#aaa" stroke-width="4"/><circle cx="232" cy="80" r="18" fill="#111" stroke="#aaa" stroke-width="4"/>
+            <text x="150" y="72" text-anchor="middle" font-family="Impact,sans-serif" font-size="14" fill="#fff">MZ · 05</text>
+          </svg>
+          <small>Der Mercedes · voll besetzt · Kurs: Augsburg</small>
+        </div>
       </div>
 
       <div class="card mission">
@@ -79,6 +89,37 @@
       </div>
     </section>
 
+    <!-- SPIELE -->
+    <section id="tab-games" class="tab">
+      <div class="card chant-card">
+        <h2>📣 Fangesang-Knopf</h2>
+        <div id="chant" class="chant">Drück den Knopf!</div>
+        <div class="row">
+          <button id="btn-chant" class="btn primary big-btn">📣 SINGEN!</button>
+          <label class="muted"><input type="checkbox" id="chant-voice" checked> Handy singt mit</label>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>🔮 Tippspiel</h2>
+        <p class="muted">Tipp abgeben (Mainz : Augsburg). Exakt = 3 Punkte, richtige Tordifferenz = 2, richtiger Sieger = 1.</p>
+        <div id="tips"></div>
+        <div class="tip-row result">
+          <span>🏁 Endergebnis</span>
+          <input type="number" min="0" max="20" inputmode="numeric" id="res-0"> :
+          <input type="number" min="0" max="20" inputmode="numeric" id="res-1">
+        </div>
+        <div id="tip-ranking"></div>
+      </div>
+
+      <div class="card">
+        <h2>🛣️ Raststätten-Bingo</h2>
+        <p class="muted">Tippe an, was ihr unterwegs erlebt. Eine volle Reihe = BINGO!</p>
+        <div id="bingo" class="bingo"></div>
+        <div class="row"><button id="btn-bingo-reset" class="btn">♻️ Neu mischen</button></div>
+      </div>
+    </section>
+
     <!-- GEGNER & STADT -->
     <section id="tab-info" class="tab">
       <div class="card"><h2>⚽ Der Gegner: FC Augsburg</h2><dl id="info-club"></dl></div>
@@ -91,6 +132,7 @@
     <button data-tab="start" class="active">🏠<span>Start</span></button>
     <button data-tab="route">🗺️<span>Anfahrt</span></button>
     <button data-tab="beer">🍺<span>Bier</span></button>
+    <button data-tab="games">🎲<span>Spiele</span></button>
     <button data-tab="info">🏰<span>Augsburg</span></button>
   </nav>
 

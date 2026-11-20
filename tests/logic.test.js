@@ -35,4 +35,30 @@ t('Countdown', () => {
   const c = L.countdownParts(90061000, 0); assert.deepStrictEqual([c.days, c.hours, c.minutes, c.seconds], [1, 1, 1, 1]);
   assert.ok(L.countdownParts(0, 5).done);
 });
+t('Tippspiel-Punkte', () => {
+  assert.strictEqual(L.tipPoints([2, 1], [2, 1]), 3);
+  assert.strictEqual(L.tipPoints([2, 1], [3, 2]), 2);
+  assert.strictEqual(L.tipPoints([2, 0], [1, 0]), 1);
+  assert.strictEqual(L.tipPoints([0, 1], [1, 0]), 0);
+  assert.strictEqual(L.tipPoints([1, 1], [0, 0]), 2);
+  assert.strictEqual(L.tipPoints(['', ''], [1, 0]), null);
+});
+t('Bingo-Reihen', () => {
+  const m = Array(16).fill(false); assert.strictEqual(L.bingoLines(m, 4), 0);
+  [0, 1, 2, 3].forEach(i => m[i] = true); assert.strictEqual(L.bingoLines(m, 4), 1);
+  [5, 10, 15].forEach(i => m[i] = true); assert.strictEqual(L.bingoLines(m, 4), 2);
+  assert.strictEqual(L.bingoLines(Array(16).fill(true), 4), 10);
+});
+t('Kilometer-Marken', () => {
+  assert.strictEqual(L.kmMark(null, 120), null);
+  assert.strictEqual(L.kmMark(103, 99), 100);
+  assert.strictEqual(L.kmMark(99, 103), null);
+  assert.strictEqual(L.kmMark(12, 0.5), 1);
+});
+t('Inhalte: 16 Bingo-Felder, Sprüche für alle km-Marken', () => {
+  const { INFO } = require('../js/data.js');
+  assert.strictEqual(new Set(INFO.bingo).size, 16);
+  [350, 300, 250, 200, 150, 100, 50, 25, 10, 1].forEach(k => assert.ok(INFO.kmLines[k], k));
+  assert.ok(INFO.chants.length >= 5);
+});
 console.log(`\n${n} Logik-Tests bestanden.`);

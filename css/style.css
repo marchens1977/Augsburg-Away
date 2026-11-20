@@ -108,3 +108,28 @@ dd { margin: 2px 0 0; }
   box-shadow: 0 6px 20px #0008; }
 .me-dot { width: 22px; height: 22px; border-radius: 50%; background: var(--cyan); border: 3px solid #fff;
   box-shadow: 0 0 0 6px #00e5ff55; }
+
+/* Spiele */
+.chant-card { text-align: center; border: 2px solid var(--cyan); }
+.chant { font: 26px Impact, sans-serif; text-transform: uppercase; color: var(--orange); min-height: 70px;
+  display: flex; align-items: center; justify-content: center; padding: 6px; }
+.chant.pop { animation: pop .4s; }
+@keyframes pop { 0% { transform: scale(.6); } 70% { transform: scale(1.15); } 100% { transform: scale(1); } }
+.chant-card .row { justify-content: center; align-items: center; }
+.big-btn { font-size: 20px; padding: 16px 26px; }
+.tip-row { display: flex; align-items: center; gap: 6px; padding: 6px 0; }
+.tip-row span { flex: 1; font-weight: 600; }
+.tip-row input { width: 52px; font-size: 20px; text-align: center; background: #000; color: #fff; border: 1px solid #ffffff30; border-radius: 8px; padding: 6px; }
+.tip-row.result { border-top: 1px solid #ffffff20; margin-top: 6px; padding-top: 10px; }
+.tip-row.result span { color: var(--cyan); }
+.rank { margin-top: 10px; }
+.rank div { padding: 4px 0; }
+.bingo { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
+.bingo button { aspect-ratio: 1; border: 2px solid #ffffff20; border-radius: 10px; background: #2b1a44; color: #fff;
+  font-size: 11px; font-weight: 600; padding: 4px; line-height: 1.15; }
+.bingo button.on { background: var(--pink); border-color: #fff; }
+.bingo button.on::after { content: ' ✔'; }
+.crew-card img { filter: saturate(1.1); }
+.tabs button { font-size: 20px; }
+.car-svg { width: 78%; max-width: 320px; filter: drop-shadow(0 0 10px #ff2d95aa); animation: drive 2.5s ease-in-out infinite alternate; }
+@keyframes drive { from { transform: translateX(-8px); } to { transform: translateX(8px); } }
