@@ -15,6 +15,11 @@ const assert = require('assert');
   assert.strictEqual(await page.locator('.crew-card').count(), 3); console.log('✔ Startseite: 3 Crew-Karten');
   await page.waitForFunction(() => [...document.querySelectorAll('.crew-card img')].every(i => i.complete && i.naturalWidth > 0));
   assert.strictEqual(await page.locator('.crew-card img').count(), 3); console.log('✔ 3 Crew-Fotos geladen');
+  if (require('fs').existsSync(path.resolve(__dirname, '../img/hero.jpg'))) {
+    await page.waitForSelector('.hero.has-img'); console.log('✔ Startbild wird angezeigt');
+  } else {
+    assert.strictEqual(await page.locator('#hero-img').count(), 0); console.log('✔ Kein Startbild da → Fotokarten werden gezeigt');
+  }
   assert.ok(/Tage|ANPFIFF/.test(await page.textContent('#countdown'))); console.log('✔ Countdown läuft');
   await shot('1-start');
 

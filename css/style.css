@@ -127,3 +127,8 @@ dd { margin: 2px 0 0; }
 .zone-bar .btn { padding: 14px 10px; }
 .zone-bar #zfs-add { flex: 1; font-size: 17px; }
 .btn.ok { background: #0a8f4f; }
+
+/* Startbild (KI-Bild) – ersetzt Fotokarten und Auto, sobald img/hero.jpg existiert */
+.hero-img { position: relative; display: block; width: 100%; max-width: 520px; margin: 22px auto 6px;
+  border: 4px solid #000; box-shadow: 6px 6px 0 #000; transform: rotate(-1.5deg); }
+.hero.has-img .crew, .hero.has-img .car { display: none; }
