@@ -37,42 +37,6 @@
     return null;
   }
 
-  var BEER_TITLES = [
-    [0, 'Nüchterner Langweiler', '🥛'],
-    [1, 'Warmduscher', '🚿'],
-    [2, 'Aufgewärmt', '🔥'],
-    [3, 'Gut dabei', '🙂'],
-    [4, 'Stimmungskanone', '🎉'],
-    [5, 'Nullfünfer-Ehrenmann', '❤️'],
-    [6, 'Vorsänger der Kurve', '📣'],
-    [8, 'Legende vom Bruchweg', '🏟️'],
-    [10, 'Ab hier zählt Mama mit', '👵'],
-    [13, 'Bitte Wasser trinken!', '💧']
-  ];
-
-  function beerTitle(count) {
-    var t = BEER_TITLES[0];
-    for (var i = 0; i < BEER_TITLES.length; i++) if (count >= BEER_TITLES[i][0]) t = BEER_TITLES[i];
-    return { title: t[1], emoji: t[2] };
-  }
-
-  // Witz-Prognose: alle 2 Bier eine Pinkelpause (gesamt über alle Mitfahrer)
-  function peeStops(totalBeers) {
-    return Math.floor(totalBeers / 2);
-  }
-
-  // Sonder-Meldungen, wenn jemand eine bestimmte Zahl erreicht
-  function milestone(count) {
-    var m = {
-      1: 'Das erste Bier! Die Auswärtssaison ist eröffnet. 🍺',
-      5: '05! Wie der Verein! Nullfünf, Nullfünf! ❤️🤍',
-      7: 'Sieben Bier – mehr als Augsburg Tore schießt. 😏',
-      10: 'Zweistellig! Ab jetzt nur noch mit Begleitperson.',
-      13: 'Unglückszahl 13 – jetzt ist ein Wasser dran. 💧'
-    };
-    return m[count] || null;
-  }
-
   // Countdown-Text bis zu einem Zeitpunkt
   function countdownParts(targetMs, nowMs) {
     var diff = Math.max(0, targetMs - nowMs);
@@ -86,9 +50,9 @@
     };
   }
 
-  // "Fahndungs-Sterne" (0–5) aus der Gesamtzahl Bier
-  function wantedStars(totalBeers) {
-    return Math.min(5, Math.floor(totalBeers / 3));
+  // "Fahndungs-Sterne" (0–5): alle 3 abgehakten Bingo-Felder ein Stern
+  function wantedStars(points) {
+    return Math.min(5, Math.floor(points / 3));
   }
 
   // Tippspiel-Punkte: 3 = exakt, 2 = richtige Tordifferenz, 1 = richtige Tendenz, 0 = daneben
@@ -129,9 +93,6 @@
     distanceKm: distanceKm,
     pathLengthKm: pathLengthKm,
     zoneTransition: zoneTransition,
-    beerTitle: beerTitle,
-    peeStops: peeStops,
-    milestone: milestone,
     countdownParts: countdownParts,
     wantedStars: wantedStars
   };

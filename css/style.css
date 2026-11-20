@@ -71,19 +71,6 @@ h2, h3 { margin: 0 0 8px; }
 .route-item a { color: var(--cyan); }
 textarea { width: 100%; background: #000; color: #9f9; border: 0; border-radius: 8px; padding: 8px; font-size: 11px; }
 
-/* Bierzähler */
-.person { display: grid; grid-template-columns: 1fr auto; gap: 6px; align-items: center; }
-.person input { background: transparent; border: 0; border-bottom: 1px dashed var(--muted); color: #fff;
-  font-size: 18px; font-weight: 700; width: 100%; }
-.person .count { font: 54px Impact, sans-serif; color: var(--orange); text-align: right; }
-.person .title { grid-column: 1 / -1; color: var(--cyan); }
-.person .glasses { grid-column: 1 / -1; font-size: 20px; word-break: break-all; min-height: 4px; }
-.person .row { grid-column: 1 / -1; }
-.person .btn.big { flex: 1; font-size: 20px; padding: 16px; }
-.driver-toggle { grid-column: 1 / -1; font-size: 13px; color: var(--muted); }
-.log { list-style: none; padding: 0; margin: 0; max-height: 200px; overflow: auto; font-size: 13px; }
-.log li { padding: 4px 0; border-bottom: 1px solid #ffffff10; }
-
 dl { margin: 0; }
 dt { color: var(--cyan); font-weight: 700; margin-top: 10px; }
 dd { margin: 2px 0 0; }

@@ -18,16 +18,7 @@ const assert = require('assert');
   assert.ok(/Tage|ANPFIFF/.test(await page.textContent('#countdown'))); console.log('✔ Countdown läuft');
   await shot('1-start');
 
-  await page.click('[data-tab=beer]');
-  await page.click('[data-add="1"]'); await page.click('[data-add="1"]');
-  assert.strictEqual((await page.textContent('#beer-people .person:nth-child(2) .count')).trim(), '2'); console.log('✔ Bier zählt');
-  await page.click('[data-add="0"]');
-  assert.ok(/Spezi/.test(await page.textContent('#beer-people .person:nth-child(1) .title'))); console.log('✔ Fahrer bekommt Spezi');
-  await page.reload();
-  await page.click('[data-tab=beer]');
-  assert.strictEqual((await page.textContent('#beer-people .person:nth-child(2) .count')).trim(), '2'); console.log('✔ Zähler bleibt nach Neuladen');
-  await shot('3-bier');
-
+  assert.strictEqual(await page.locator('[data-tab=beer]').count(), 0); console.log('✔ Kein Bierzähler mehr');
   await page.click('[data-tab=route]');
   await page.click('#btn-gps');
   await page.waitForFunction(() => /Live/.test(document.getElementById('gps-status').textContent));
@@ -55,6 +46,11 @@ const assert = require('assert');
   for (const i of [0, 1, 2, 3]) await page.click(`[data-b="${i}"]`);
   await page.waitForSelector('#toast:not(.hidden)');
   assert.ok(/BINGO/.test(await page.textContent('#toast'))); console.log('✔ Bingo erkannt');
+  await page.reload(); await page.click('[data-tab=games]');
+  assert.strictEqual(await page.inputValue('#res-0'), '2'); assert.strictEqual(await page.locator('#bingo button.on').count(), 4);
+  console.log('✔ Tipps & Bingo bleiben nach Neuladen');
+  await page.click('[data-tab=start]');
+  assert.strictEqual(await page.textContent('#stars'), '★☆☆☆☆'); console.log('✔ Fahndungs-Stern durch Bingo');
   await shot('5-spiele');
 
   await page.click('[data-tab=info]');

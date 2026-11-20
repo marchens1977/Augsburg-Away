@@ -1,4 +1,4 @@
-/* Die eigentliche App: Reiter, Karte, GPS, Mainz-Alarm, Bierzähler, Infos. */
+/* Die eigentliche App: Reiter, Karte, GPS, Mainz-Alarm, Spiele, Infos. */
 (function () {
   var L_ = window.Logic, C = window.CONFIG, I = window.INFO;
   var $ = function (id) { return document.getElementById(id); };
@@ -44,7 +44,7 @@
       }).join('');
   }
   function renderStars() {
-    var n = L_.wantedStars(totalBeers());
+    var n = L_.wantedStars(bingo.marked.filter(Boolean).length);
     $('stars').textContent = '★★★★★'.slice(0, n) + '☆☆☆☆☆'.slice(0, 5 - n);
   }
 
@@ -184,78 +184,8 @@
     editPoints = zone.slice(); editFresh = true; zoneLayer.setLatLngs(zone); drawEdit(); lastInside = null;
   });
 
-  // ---------- Bierzähler ----------
-  var beer = store.get('beer', null) || {
-    people: C.crew.map(function (p, i) { return { name: p.short || p.name, count: 0, spezi: 0, driver: i === 0 }; }),
-    log: []
-  };
-  function saveBeer() { store.set('beer', beer); renderBeer(); renderStars(); if (window.__tipsReady) renderTips(); }
-  function totalBeers() { return beer.people.reduce(function (s, p) { return s + p.count; }, 0); }
-
-  function renderBeer() {
-    var total = totalBeers();
-    var leader = beer.people.slice().sort(function (a, b) { return b.count - a.count; })[0];
-    var stops = L_.peeStops(total);
-    $('beer-summary').innerHTML = stat(total, 'Bier gesamt') +
-      stat(total * 0.5 + ' l', 'Liter vernichtet') +
-      stat(stops, 'Pinkelpausen (Prognose)') +
-      stat(leader && leader.count ? esc(leader.name) : '–', 'Tabellenführer');
-
-    $('beer-people').innerHTML = beer.people.map(function (p, i) {
-      var t = L_.beerTitle(p.count);
-      return '<div class="card person">' +
-        '<input value="' + esc(p.name) + '" data-i="' + i + '" class="pname" aria-label="Name">' +
-        '<div class="count">' + (p.driver ? p.spezi : p.count) + '</div>' +
-        '<div class="title">' + (p.driver ? '🚗 Fahrer – nur Spezi & Wasser (' + p.spezi + ')' : t.emoji + ' ' + t.title) + '</div>' +
-        '<div class="glasses">' + (p.driver ? '🥤'.repeat(Math.min(p.spezi, 30)) : '🍺'.repeat(Math.min(p.count, 30))) + '</div>' +
-        '<div class="row"><button class="btn big primary" data-add="' + i + '">' + (p.driver ? '+ 🥤 Spezi' : '+ 🍺 Prost!') + '</button>' +
-        '<button class="btn big" data-sub="' + i + '">−</button></div>' +
-        '<label class="driver-toggle"><input type="checkbox" data-drv="' + i + '"' + (p.driver ? ' checked' : '') + '> ist Fahrer</label>' +
-        '</div>';
-    }).join('');
-
-    $('beer-log').innerHTML = beer.log.slice().reverse().slice(0, 50).map(function (l) {
-      return '<li>' + esc(l.t) + ' – ' + esc(l.msg) + '</li>';
-    }).join('') || '<li class="muted">Noch nix getrunken. Skandal!</li>';
-  }
-
-  $('beer-people').addEventListener('click', function (e) {
-    var b = e.target.closest('button'); if (!b) return;
-    var now = new Date().toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' });
-    if (b.dataset.add !== undefined) {
-      var p = beer.people[+b.dataset.add];
-      if (p.driver) { p.spezi++; beer.log.push({ t: now, msg: p.name + ' trinkt brav Spezi 🥤' }); toast('Vorbildlich! 👏 Der Fahrer ist der wahre Held.'); }
-      else {
-        p.count++;
-        beer.log.push({ t: now, msg: p.name + ' trinkt Bier Nr. ' + p.count + ' 🍺' });
-        var m = L_.milestone(p.count);
-        toast(m ? p.name + ': ' + m : 'Prost, ' + p.name + '! 🍻');
-        if (navigator.vibrate) navigator.vibrate(60);
-      }
-    }
-    if (b.dataset.sub !== undefined) {
-      var q = beer.people[+b.dataset.sub];
-      if (q.driver && q.spezi > 0) q.spezi--;
-      else if (!q.driver && q.count > 0) { q.count--; beer.log.push({ t: now, msg: q.name + ' schummelt: −1 🙄' }); }
-    }
-    saveBeer();
-  });
-  $('beer-people').addEventListener('change', function (e) {
-    if (e.target.classList.contains('pname')) { beer.people[+e.target.dataset.i].name = e.target.value.trim() || 'Namenlos'; saveBeer(); }
-    if (e.target.dataset.drv !== undefined) {
-      var p = beer.people[+e.target.dataset.drv];
-      if (e.target.checked && p.count > 0) {
-        e.target.checked = false;
-        toast('🚨 Wer schon ' + p.count + ' Bier hatte, fährt heute nicht mehr!');
-        return;
-      }
-      p.driver = e.target.checked; saveBeer();
-    }
-  });
-  $('btn-beer-reset').addEventListener('click', function () {
-    if (!confirm('Wirklich alle Zähler löschen?')) return;
-    beer.people.forEach(function (p) { p.count = 0; p.spezi = 0; }); beer.log = []; saveBeer();
-  });
+  // ---------- Crew (Namen für das Tippspiel) ----------
+  var people = C.crew.map(function (p) { return { name: p.short || p.name }; });
 
   // ---------- Fangesang ----------
   var lastChant = -1;
@@ -278,7 +208,7 @@
   // ---------- Tippspiel ----------
   var tips = store.get('tips', { tips: {}, result: ['', ''] });
   function renderTips() {
-    $('tips').innerHTML = beer.people.map(function (p, i) {
+    $('tips').innerHTML = people.map(function (p, i) {
       var t = tips.tips[i] || ['', ''];
       return '<div class="tip-row"><span>' + esc(p.name) + '</span>' +
         '<input type="number" min="0" max="20" inputmode="numeric" data-tip="' + i + '" data-side="0" value="' + esc(t[0]) + '"> : ' +
@@ -288,7 +218,7 @@
     renderRanking();
   }
   function renderRanking() {
-    var rows = beer.people.map(function (p, i) { return { name: p.name, pts: L_.tipPoints(tips.tips[i], tips.result) }; });
+    var rows = people.map(function (p, i) { return { name: p.name, pts: L_.tipPoints(tips.tips[i], tips.result) }; });
     if (rows.every(function (r) { return r.pts === null; })) { $('tip-ranking').innerHTML = '<p class="muted">Nach dem Spiel oben das Endergebnis eintragen – dann gibt’s die Siegerehrung.</p>'; return; }
     rows.sort(function (a, b) { return (b.pts || 0) - (a.pts || 0); });
     var medals = ['🥇', '🥈', '🥉'];
@@ -322,11 +252,11 @@
     var i = +b.dataset.b; bingo.marked[i] = !bingo.marked[i];
     var lines = L_.bingoLines(bingo.marked, 4);
     if (lines > bingoCount) { toast(lines === 10 ? '🤯 KOMPLETTES BRETT! Ihr habt die A8 durchgespielt!' : '🎉 BINGO! (' + lines + ' Reihe' + (lines > 1 ? 'n' : '') + ') – Runde geht auf den Letzten!'); if (navigator.vibrate) navigator.vibrate([200, 80, 200, 80, 400]); }
-    bingoCount = lines; store.set('bingo', bingo); renderBingo();
+    bingoCount = lines; store.set('bingo', bingo); renderBingo(); renderStars();
   });
   $('btn-bingo-reset').addEventListener('click', function () {
     if (!confirm('Neues Bingo-Feld mischen? Die Kreuzchen gehen verloren.')) return;
-    bingo = { fields: shuffle(I.bingo).slice(0, 16), marked: [] }; bingoCount = 0; store.set('bingo', bingo); renderBingo();
+    bingo = { fields: shuffle(I.bingo).slice(0, 16), marked: [] }; bingoCount = 0; store.set('bingo', bingo); renderBingo(); renderStars();
   });
 
   // ---------- Infos ----------
@@ -339,6 +269,5 @@
 
   // ---------- Start ----------
   renderCrew(); renderCountdown(); setInterval(renderCountdown, 1000);
-  renderRoutes(); renderBeer(); renderStars(); renderInfo();
-  renderTips(); renderBingo(); window.__tipsReady = true;
+  renderRoutes(); renderInfo(); renderTips(); renderBingo(); renderStars();
 })();

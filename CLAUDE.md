@@ -6,14 +6,11 @@ Kleine Spaß-Web-App für die Auswärtsfahrt zum Spiel **FC Augsburg – 1. FSV 
 
 ## Aktueller Stand (20.11.2026)
 - **Start**: Retro-/Vice-Look (Sonnenuntergang, Palmen, schräge Schrift), 3 Crew-Karten mit Comic-Fotos,
-  Countdown bis Anpfiff, „Fahndungs-Sterne“ (steigen mit der Bierzahl).
+  Countdown bis Anpfiff, „Fahndungs-Sterne“ (alle 3 abgehakten Bingo-Felder ein Stern).
 - **Anfahrt**: Karte (Leaflet + OpenStreetMap) mit 2 Routen (über Stuttgart / über Würzburg), Stadion- und Mainz-Marker,
   rote Mainz-Zone, GPS-Tracker (eigene Position, gefahrene Spur, km bis Augsburg, Tempo),
   **Mainz-Alarm** beim Verlassen der Zone (Blinken, Vibration, Sirene) + „Willkommen daheim“ beim Zurückkommen,
   „Zone bearbeiten“ (Punkte auf der Karte antippen → Text an Claude schicken).
-- **Bier**: Zähler pro Person, lustige Titel, Meilenstein-Sprüche (z. B. bei 5: „05! Wie der Verein!“),
-  Pinkelpausen-Prognose, Tabellenführer, Protokoll. Fahrer-Häkchen: Fahrer zählt nur Spezi;
-  wer schon Bier hatte, kann nicht Fahrer werden.
 - **Augsburg**: Infos zum FCA, zur Stadt und Tipps für Sonntag.
 - **Spiele** (neu 20.11.): Fangesang-Knopf (zufälliger Schlachtruf, Handy spricht ihn per Sprachausgabe),
   Tippspiel mit Siegerehrung (3/2/1 Punkte), Raststätten-Bingo 4×4 (erkennt Reihen, Spalten, Diagonalen).
@@ -30,24 +27,25 @@ Kleine Spaß-Web-App für die Auswärtsfahrt zum Spiel **FC Augsburg – 1. FSV 
   (`python3 tools/comic.py foto.jpg img/crewX.jpg links oben rechts unten`). Originalfotos liegen NICHT im Repository.
 
 ## Wichtige Entscheidungen
-- Kein Server: Alles (Bierzähler, GPS-Spur, eigene Zone) wird **nur auf dem jeweiligen Handy** gespeichert.
-  Folge: Jeder sieht nur seinen eigenen Standort und seine eigene Zählung. Gemeinsames Live-Teilen bräuchte einen
+- Kein Server: Alles (Tipps, Bingo, GPS-Spur, eigene Zone) wird **nur auf dem jeweiligen Handy** gespeichert.
+  Folge: Jeder sieht nur seinen eigenen Standort und seine eigenen Eingaben. Gemeinsames Live-Teilen bräuchte einen
   Online-Dienst (z. B. kostenlose Datenbank) – bewusst erstmal weggelassen.
 - Routen sind ungefähre Linien, für echte Navigation gibt es „In Google Maps öffnen“.
 - Kein „GTA“-Logo/Originalgrafik, nur ein eigener Retro-Stil im ähnlichen Look.
 - Stadtplan mit Kneipen: vom Nutzer gestrichen.
+- Bierzähler: am 20.11. auf Wunsch entfernt („macht für die Fahrt keinen Sinn“).
 
 ## Tests (nach jeder Änderung laufen lassen)
 ```
-node tests/logic.test.js      # 14 Rechen-Tests (Zone, Entfernungen, Titel, Countdown, Tippspiel, Bingo, km-Marken …)
+node tests/logic.test.js      # 12 Rechen-Tests (Zone, Entfernungen, Sterne, Countdown, Tippspiel, Bingo, km-Marken …)
 node tests/browser.test.js    # Klick-Test im Browser in Handy-Größe, inkl. simulierter GPS-Fahrt aus Mainz raus
 SCREENSHOTS=/pfad node tests/browser.test.js   # zusätzlich Bildschirmfotos
 ```
-Letzter Lauf: alle bestanden (20.11.2026, nach Spiele-Reiter & Fotos).
+Letzter Lauf: alle bestanden (20.11.2026, nach Entfernen des Bierzählers).
 
 ## Offene Punkte
 - [x] Fotos der 3 Mitfahrer → Startseite (Comic-Filter)
-- [x] Namen: links Marc, Mitte Jens (Sportbrille), rechts Jens (Locken). In Listen mit Zusatz, damit man die zwei Jens unterscheidet.
+- [x] Namen: links Marc, Mitte Jens (Sportbrille), rechts Jens (Locken). Im Tippspiel mit Zusatz, damit man die zwei Jens unterscheidet.
 - [ ] **Anstoßzeit bestätigen** (Platzhalter: 15:30 Uhr)
 - [ ] Mainz-Zone genau festlegen
 - [ ] Alarm-Text / Sound nach Wunsch anpassen
@@ -61,8 +59,7 @@ Letzter Lauf: alle bestanden (20.11.2026, nach Spiele-Reiter & Fotos).
 - [ ] Karte lädt mit Straßen (im Test-Container war die Karte ohne Hintergrund, weil das Internet dort gesperrt ist)
 - [ ] „GPS starten“ fragt nach Standort, blauer Punkt erscheint an der richtigen Stelle
 - [ ] „Alarm testen“: rotes Blinken, Vibration, Sirenen-Ton
-- [ ] Bierzähler: Plus/Minus, Namen ändern, Fahrer-Häkchen
-- [ ] Nach Schließen und Neuöffnen sind die Bierzahlen noch da
+- [ ] Nach Schließen und Neuöffnen sind Tipps und Bingo-Kreuze noch da
 - [ ] Fotos auf der Startseite sehen gut aus
 - [ ] Fangesang-Knopf: Handy spricht den Spruch (Ton an!)
 - [ ] Tippspiel: Tipps eintragen, nach dem Spiel Endergebnis → Siegerehrung

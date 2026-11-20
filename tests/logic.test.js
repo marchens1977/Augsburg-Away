@@ -21,16 +21,9 @@ t('Zonen-Wechsel wird erkannt', () => {
   assert.strictEqual(L.zoneTransition(false, true), 'entered');
   assert.strictEqual(L.zoneTransition(true, true), null);
 });
-t('Bier-Titel', () => {
-  assert.strictEqual(L.beerTitle(0).title, 'Nüchterner Langweiler');
-  assert.strictEqual(L.beerTitle(5).title, 'Nullfünfer-Ehrenmann');
-  assert.strictEqual(L.beerTitle(7).title, 'Vorsänger der Kurve');
-  assert.strictEqual(L.beerTitle(99).title, 'Bitte Wasser trinken!');
+t('Fahndungs-Sterne', () => {
+  assert.strictEqual(L.wantedStars(0), 0); assert.strictEqual(L.wantedStars(7), 2); assert.strictEqual(L.wantedStars(100), 5);
 });
-t('Pinkelpausen & Sterne', () => {
-  assert.strictEqual(L.peeStops(5), 2); assert.strictEqual(L.wantedStars(0), 0); assert.strictEqual(L.wantedStars(100), 5);
-});
-t('Meilenstein bei 5', () => assert.ok(/05/.test(L.milestone(5))));
 t('Countdown', () => {
   const c = L.countdownParts(90061000, 0); assert.deepStrictEqual([c.days, c.hours, c.minutes, c.seconds], [1, 1, 1, 1]);
   assert.ok(L.countdownParts(0, 5).done);

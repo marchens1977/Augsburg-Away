@@ -8,7 +8,7 @@
 
     // Die Crew – Fotos kommen später in den Ordner img/ (crew1.jpg, crew2.jpg, crew3.jpg)
     crew: [
-      // name = auf der Fotokarte, short = in Bierzähler & Tippspiel (zwei Jens!)
+      // name = auf der Fotokarte, short = im Tippspiel (zwei Jens!)
       { name: 'Marc', short: 'Marc', photo: 'img/crew1.jpg', emoji: '😎' },
       { name: 'Jens', short: 'Jens (Sportbrille)', photo: 'img/crew2.jpg', emoji: '🤠' },
       { name: 'Jens', short: 'Jens (Locken)', photo: 'img/crew3.jpg', emoji: '🥸' }
@@ -86,7 +86,7 @@
     'Stau am Frankfurter Kreuz', 'Bayern-Fan an der Tanke', 'Würstchen über 6 €', 'WC kostet 1 €',
     'Wohnmobil-Kolonne', 'Andere 05er überholen', 'Jemand schläft ein', 'Blitzer!',
     'Falsche Ausfahrt', '„Sind wir bald da?“', 'Augsburg-Schal gesichtet', 'Baustelle mit 60',
-    'Hupen für 05-Fans', 'Kaffee verschüttet', 'Navi will umleiten', 'Bier Nr. 3 vor Ulm'
+    'Hupen für 05-Fans', 'Kaffee verschüttet', 'Navi will umleiten', 'Sprit über 2 € pro Liter'
   ];
 
   // Fangesänge (kurze Schlachtrufe)
@@ -103,7 +103,7 @@
 
   // Sprüche für die "Noch X km"-Marken unterwegs
   var KM_LINES = {
-    350: 'Noch 350 km. Die Reise hat gerade erst begonnen. 🍺',
+    350: 'Noch 350 km. Die Reise hat gerade erst begonnen. 🚘',
     300: 'Noch 300 km. Erste Pinkelpause schon geplant?',
     250: 'Noch 250 km. Mainz ist weg, die Stimmung ist da!',
     200: 'Noch 200 km. Halbzeit der Hinfahrt – Getränkecheck!',
